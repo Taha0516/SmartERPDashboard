@@ -2,26 +2,26 @@
 <nav class="erp-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-brand">
         <i class="bi bi-grid-3x3-gap-fill nav-brand-icon"></i>
-        <span class="nav-brand-text">Smart<strong>ERP</strong></span>
+        <span class="nav-brand-text">@Loc.T("SmartERP")</span>
     </div>
 
     <ul class="nav-links" role="list">
         <li>
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <i class="bi bi-speedometer2"></i>
-                <span>Overview</span>
+                <span>@Loc.T("Overview")</span>
             </NavLink>
         </li>
         <li>
             <NavLink class="nav-link" href="tech-toolkit">
                 <i class="bi bi-cpu-fill"></i>
-                <span>Tech Toolkit</span>
+                <span>@Loc.T("Tech Toolkit")</span>
             </NavLink>
         </li>
         <li>
             <NavLink class="nav-link" href="customer-experience">
                 <i class="bi bi-people-fill"></i>
-                <span>Customer Experience</span>
+                <span>@Loc.T("Customer Experience")</span>
             </NavLink>
         </li>
     </ul>
@@ -30,9 +30,21 @@
         <div class="nav-user-badge">
             <i class="bi bi-mortarboard-fill"></i>
             <div>
-                <span class="nav-user-name">Academic Demo</span>
-                <span class="nav-user-role">Research Dashboard</span>
+                <span class="nav-user-name">@Loc.T("Academic Demo")</span>
+                <span class="nav-user-role">@Loc.T("Research Dashboard")</span>
             </div>
         </div>
     </div>
 </nav>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Loc.OnLanguageChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= StateHasChanged;
+    }
+}

@@ -6,33 +6,33 @@
 
 <section class="page-hero">
     <div class="hero-content">
-        <span class="hero-eyebrow">Academic Research Dashboard</span>
-        <h1 class="hero-title">The Role of Modern Technology<br />in Organizational Competitiveness</h1>
-        <p class="hero-subtitle">Toggle between states to visualize the measurable impact of digital transformation on key business metrics.</p>
+        <span class="hero-eyebrow">@Loc.T("Academic Research Dashboard")</span>
+        <h1 class="hero-title">@((MarkupString)Loc.T("The Role of Modern Technology<br />in Organizational Competitiveness"))</h1>
+        <p class="hero-subtitle">@Loc.T("Toggle between states to visualize the measurable impact of digital transformation on key business metrics.")</p>
     </div>
 </section>
 
 <!-- ── Toggle Switch ──────────────────────────────────────────── -->
 <div class="toggle-section">
     <div class="toggle-container" role="group" aria-label="Technology State Toggle">
-        <span class="toggle-label @(!_afterTech ? "active-label" : "")">Before Tech</span>
+        <span class="toggle-label @(!_afterTech ? "active-label" : "")">@Loc.T("Before Tech")</span>
         <label class="toggle-switch" title="@(_afterTech ? "Switch to Before Tech" : "Switch to After Tech")">
             <input type="checkbox" id="techToggle" checked="@_afterTech" @onchange="OnToggleChanged" />
             <span class="toggle-thumb"></span>
         </label>
-        <span class="toggle-label @(_afterTech ? "active-label" : "")">After Tech</span>
+        <span class="toggle-label @(_afterTech ? "active-label" : "")">@Loc.T("After Tech")</span>
     </div>
     <p class="toggle-state-text">
         Currently viewing:&nbsp;
         <strong class="state-badge @(_afterTech ? "badge-after" : "badge-before")">
-            @(_afterTech ? "✅ Post-Digital Transformation" : "⚠️ Pre-Digital Transformation")
+            @(_afterTech ? Loc.T("✅ Post-Digital Transformation") : Loc.T("⚠️ Pre-Digital Transformation"))
         </strong>
     </p>
 </div>
 
 <!-- ── KPI Cards ──────────────────────────────────────────────── -->
 <section class="kpi-section" aria-label="Key Performance Indicators">
-    <h2 class="section-heading">Key Performance Indicators</h2>
+    <h2 class="section-heading">@Loc.T("Key Performance Indicators")</h2>
     <div class="kpi-grid">
         @foreach (var metric in _kpiMetrics)
         {
@@ -46,12 +46,12 @@
     <div class="chart-card">
         <div class="chart-card__header">
             <div>
-                <h2 class="chart-title">Revenue Growth vs. Market Competitors</h2>
-                <p class="chart-subtitle">Quarterly revenue index — Organization vs. Industry Average</p>
+                <h2 class="chart-title">@Loc.T("Revenue Growth vs. Market Competitors")</h2>
+                <p class="chart-subtitle">@Loc.T("Quarterly revenue index — Organization vs. Industry Average")</p>
             </div>
             <div class="chart-legend-chips">
-                <span class="legend-chip chip-blue">Our Organization</span>
-                <span class="legend-chip chip-orange">Competitors</span>
+                <span class="legend-chip chip-blue">@Loc.T("Our Organization")</span>
+                <span class="legend-chip chip-orange">@Loc.T("Competitors")</span>
             </div>
         </div>
         <div class="chart-wrapper">
@@ -67,7 +67,13 @@
 
     protected override void OnInitialized()
     {
+        Loc.OnLanguageChanged += StateHasChanged;
         LoadData();
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= StateHasChanged;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

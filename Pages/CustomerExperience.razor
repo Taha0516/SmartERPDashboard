@@ -5,9 +5,9 @@
 
 <section class="page-hero">
     <div class="hero-content">
-        <span class="hero-eyebrow">Customer-Centric Automation</span>
-        <h1 class="hero-title">Customer Experience Simulation</h1>
-        <p class="hero-subtitle">Witness how automation and AI deliver lightning-fast service and around-the-clock intelligent support.</p>
+        <span class="hero-eyebrow">@Loc.T("Customer-Centric Automation")</span>
+        <h1 class="hero-title">@Loc.T("Customer Experience Simulation")</h1>
+        <p class="hero-subtitle">@Loc.T("Witness how automation and AI deliver lightning-fast service and around-the-clock intelligent support.")</p>
     </div>
 </section>
 
@@ -18,8 +18,8 @@
         <div class="cx-panel__header">
             <i class="bi bi-truck cx-panel__icon"></i>
             <div>
-                <h2 class="cx-panel__title">Smart Order Tracker</h2>
-                <p class="cx-panel__subtitle">Automated fulfillment pipeline in real-time</p>
+                <h2 class="cx-panel__title">@Loc.T("Smart Order Tracker")</h2>
+                <p class="cx-panel__subtitle">@Loc.T("Automated fulfillment pipeline in real-time")</p>
             </div>
         </div>
 
@@ -35,8 +35,8 @@
                         { <span>@(idx + 1)</span> }
                     </div>
                     <div class="stage-info">
-                        <strong>@_stages[idx].Name</strong>
-                        <small>@_stages[idx].Subtitle</small>
+                        <strong>@Loc.T(_stages[idx].Name)</strong>
+                        <small>@Loc.T(_stages[idx].Subtitle)</small>
                     </div>
                 </div>
             }
@@ -47,7 +47,7 @@
                 <div class="progress-bar-fill" style="width: @_progressPct%"></div>
             </div>
             <div class="progress-labels">
-                <span>@_stages[_currentStage < _stages.Length ? _currentStage : _stages.Length - 1].Name</span>
+                <span>@Loc.T(_stages[_currentStage < _stages.Length ? _currentStage : _stages.Length - 1].Name)</span>
                 <span>@_progressPct%</span>
             </div>
         </div>
@@ -55,13 +55,13 @@
         @if (_isSimulating)
         {
             <div class="sim-status pulse-text">
-                <i class="bi bi-lightning-charge-fill"></i> Automation running…
+                <i class="bi bi-lightning-charge-fill"></i> @Loc.T("Automation running…")
             </div>
         }
         else if (_progressPct == 100)
         {
             <div class="sim-status success-text">
-                <i class="bi bi-box-seam-fill"></i> Order Delivered! ✅ Customer satisfaction secured.
+                <i class="bi bi-box-seam-fill"></i> @Loc.T("Order Delivered! ✅ Customer satisfaction secured.")
             </div>
         }
 
@@ -78,7 +78,7 @@
             else
             {
                 <i class="bi bi-play-circle-fill"></i>
-                <span>@(_progressPct == 100 ? "Simulate Again" : "Simulate Order")</span>
+                <span>@(_progressPct == 100 ? Loc.T("Simulate Again") : Loc.T("Simulate Order"))</span>
             }
         </button>
     </section>
@@ -88,8 +88,8 @@
         <div class="cx-panel__header">
             <i class="bi bi-chat-dots-fill cx-panel__icon cx-panel__icon--purple"></i>
             <div>
-                <h2 class="cx-panel__title">24/7 AI Support Bot</h2>
-                <p class="cx-panel__subtitle">Click a question to see instant AI-powered responses</p>
+                <h2 class="cx-panel__title">@Loc.T("24/7 AI Support Bot")</h2>
+                <p class="cx-panel__subtitle">@Loc.T("Click a question to see instant AI-powered responses")</p>
             </div>
         </div>
         <ChatbotUI Entries="_chatEntries" />
@@ -118,7 +118,13 @@
 
     protected override void OnInitialized()
     {
+        Loc.OnLanguageChanged += StateHasChanged;
         _chatEntries = DataService.GetChatbotEntries();
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= StateHasChanged;
     }
 
     private async Task SimulateOrder()

@@ -9,7 +9,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-// ── Register Mock Data Service ──────────────────────────────────
+// ── Register Services ───────────────────────────────────────────
 builder.Services.AddSingleton<IMockDataService, MockDataService>();
+builder.Services.AddSingleton<LocalizationService>();
 
 await builder.Build().RunAsync();

@@ -5,9 +5,9 @@
 
 <section class="page-hero">
     <div class="hero-content">
-        <span class="hero-eyebrow">Digital Infrastructure</span>
-        <h1 class="hero-title">Technology Toolkit</h1>
-        <p class="hero-subtitle">Explore the four pillars of modern technology that drive organizational competitiveness and sustainable growth.</p>
+        <span class="hero-eyebrow">@Loc.T("Digital Infrastructure")</span>
+        <h1 class="hero-title">@Loc.T("Technology Toolkit")</h1>
+        <p class="hero-subtitle">@Loc.T("Explore the four pillars of modern technology that drive organizational competitiveness and sustainable growth.")</p>
     </div>
 </section>
 
@@ -39,7 +39,7 @@
                 <p class="modal-line"><i class="bi bi-check-circle-fill modal-check"></i>@_selectedTool.DetailLine2</p>
             </div>
             <div class="modal-footer-tag">
-                <i class="bi bi-bar-chart-line-fill"></i>&nbsp; Proven Competitive Advantage
+                <i class="bi bi-bar-chart-line-fill"></i>&nbsp; @Loc.T("Proven Competitive Advantage")
             </div>
         </div>
     </div>
@@ -52,7 +52,13 @@
 
     protected override void OnInitialized()
     {
+        Loc.OnLanguageChanged += StateHasChanged;
         _tools = DataService.GetTechTools();
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= StateHasChanged;
     }
 
     private void OpenModal(TechTool tool)

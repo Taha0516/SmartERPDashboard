@@ -11,8 +11,8 @@
             <span class="chatbot-status-dot" title="Online"></span>
         </div>
         <div class="chatbot-header-info">
-            <strong>ERP Smart Assistant</strong>
-            <small>Always online · AI-powered</small>
+            <strong>@Loc.T("ERP Smart Assistant")</strong>
+            <small>@Loc.T("Always online · AI-powered")</small>
         </div>
     </div>
 
@@ -33,7 +33,7 @@
     </div>
 
     <div class="chatbot-quick-actions">
-        <p class="quick-label">Suggested questions:</p>
+        <p class="quick-label">@Loc.T("Suggested questions:")</p>
         @foreach (var entry in Entries)
         {
             <button class="quick-btn"
@@ -49,10 +49,21 @@
     [Parameter, EditorRequired]
     public List<ChatbotEntry> Entries { get; set; } = default!;
 
-    private readonly List<ChatMessage> _messages = new()
+    private readonly List<ChatMessage> _messages = new();
+
+    protected override void OnInitialized()
     {
-        new() { Text = "👋 Hello! I'm your 24/7 AI assistant. How can I help you today?", IsBot = true }
-    };
+        Loc.OnLanguageChanged += StateHasChanged;
+        if (!_messages.Any())
+        {
+            _messages.Add(new() { Text = Loc.T("👋 Hello! I'm your 24/7 AI assistant. How can I help you today?"), IsBot = true });
+        }
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= StateHasChanged;
+    }
 
     private void SendQuery(ChatbotEntry entry)
     {
