@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SmartERPDashboard",
   "resources": {
-    "hash": "sha256-YQBNiHdl1ucIVKAIbBunjGOVWh82UV18kpqgTwvfd4I=",
+    "hash": "sha256-gj5XJD4Z9DLZlrkn4dUwNWU6HqtRoZQf4FTfWRPQGAs=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-sn/g61GjVPhViOYQDkq1OMlk0eyS9r2Hi0qgU2o0HIU="
     },
@@ -33,7 +33,7 @@
       "Microsoft.JSInterop.wasm": "sha256-yYSIGAZt44I/rafsJpvCIcJTMCNuL5/Ck7LHiUtNs70=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-UFB+2RHRiffv/kpP3onPVdxXxmwJA6oo3dI1M+LiZOU=",
       "System.Collections.Concurrent.wasm": "sha256-YFRGPUB4BaSD5WHY7Y3/7LBButq/cKGqPMzsrMCmDhQ=",
-      "System.Collections.wasm": "sha256-5VhpIPxviJiWsWb/lDXH3MQUa99WyD9dokMe8il4Zuw=",
+      "System.Collections.wasm": "sha256-zXQ/D+LE8rACh5Pncocfgm0Z7KkB8TIGstE+ZYkN+ZY=",
       "System.ComponentModel.wasm": "sha256-m0ow8J0ELUpYQfZXbeUdVcJDENLYDJo7k6LwNqgkFrc=",
       "System.Console.wasm": "sha256-MYqGf3/RUK/L14eXZZJ8lRG9q9Oynn0FC/kAw0YpMW8=",
       "System.Linq.wasm": "sha256-PV8VBSY1UTV7jEnDNABo912lyksDNKe7kjoslQyxN9U=",
@@ -42,12 +42,13 @@
       "System.Net.Primitives.wasm": "sha256-VmYT04cIe+6fcjASxcGAzBL56WW1J152FpK9sTHymO8=",
       "System.Private.Uri.wasm": "sha256-Wm45ochLZrWJmVDdKnPfVA64VuWuPRWUVaPoBnq/qnA=",
       "System.Runtime.InteropServices.JavaScript.wasm": "sha256-KiJxa6wkvatNKur6q4ZSOVO3O04kh6HlQ0c7yyKnhrM=",
-      "System.Runtime.wasm": "sha256-U/xcLRj0t5Ovnylr2JNEB5ZOxdud5e81Z0p+h6q/mKI=",
+      "System.Runtime.wasm": "sha256-LvHgYKSFKip7Ae3qCSkGx2GTwEofXeRgD2YhDrimDzo=",
       "System.Text.Encodings.Web.wasm": "sha256-UGsgUZV3Er8ms7Aw6V+HTiVBhBRFgOzwLTK1Bm+nTGk=",
       "System.Text.Json.wasm": "sha256-2uX7GxTvQ2oMynwAqZJOjTeb1uKdNYBmq3GqVrd3XzY=",
       "System.Text.RegularExpressions.wasm": "sha256-6VPZ0nXmzA+ujfKikHZ7FUFvtVt4QWJ/cY3SSeYJXnE=",
+      "System.Threading.wasm": "sha256-xxupzv/Rv8t0XxpO0lAkJYWV75cxE9ycmHg6WOI09Pg=",
       "System.Private.CoreLib.wasm": "sha256-9g9SPxwvH2cPK61CO9LP7D8p4diuni+OdyS8nCiOcp8=",
-      "SmartERPDashboard.wasm": "sha256-o2tKN8Ju2Br33GAScHodOoND62YM10remUhXtSGMkZ0="
+      "SmartERPDashboard.wasm": "sha256-JmL6NIDgLPKtOS+eStawIdk3SFwIsbobzFBEA8sxAOs="
     }
   },
   "cacheBootResources": true,
