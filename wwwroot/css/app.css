@@ -51,17 +51,18 @@ button { cursor: pointer; font-family: inherit; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Shell Layout ───────────────────────────────────────────── */
-.erp-shell { display: flex; min-height: 100vh; }
-.erp-main  { flex: 1; margin-left: var(--nav-w); overflow-x: hidden; }
+.erp-shell { display: flex; min-height: 100vh; overflow-x: hidden; }
+.erp-main  { flex: 1; margin-inline-start: var(--nav-w); overflow-x: hidden; transition: margin 0.3s ease; }
 .erp-content { padding: 36px 40px; max-width: 1300px; }
 
 /* ── Sidebar Nav ────────────────────────────────────────────── */
 .erp-nav {
-  position: fixed; top: 0; left: 0; bottom: 0; width: var(--nav-w);
+  position: fixed; top: 0; inset-inline-start: 0; bottom: 0; width: var(--nav-w);
   background: var(--bg-surface);
-  border-right: 1px solid var(--border);
+  border-inline-end: 1px solid var(--border);
   display: flex; flex-direction: column; padding: 24px 16px;
   z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .nav-brand {
   display: flex; align-items: center; gap: 10px; padding: 4px 8px 28px;
@@ -368,8 +369,21 @@ button { cursor: pointer; font-family: inherit; }
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 900px) {
   :root { --nav-w: 0px; }
-  .erp-nav { display: none; }
-  .erp-main { margin-left: 0; }
+  .erp-nav { 
+      transform: translateX(-100%); 
+      width: 260px;
+  }
+  [dir="rtl"] .erp-nav {
+      transform: translateX(100%);
+  }
+  .menu-open .erp-nav {
+      transform: translateX(0) !important;
+      box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  }
+  .d-mobile {
+      display: block !important;
+  }
+  .erp-main { margin-inline-start: 0; }
   .erp-content { padding: 20px 16px; }
   .hero-title { font-size: 1.5rem; }
   .cx-layout { grid-template-columns: 1fr; }

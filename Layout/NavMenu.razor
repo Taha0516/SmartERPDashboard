@@ -5,7 +5,7 @@
         <span class="nav-brand-text">@Loc.T("SmartERP")</span>
     </div>
 
-    <ul class="nav-links" role="list">
+    <ul class="nav-links" role="list" @onclick="HandleClick">
         <li>
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <i class="bi bi-speedometer2"></i>
@@ -38,6 +38,17 @@
 </nav>
 
 @code {
+    [Parameter]
+    public EventCallback OnLinkClick { get; set; }
+
+    private async Task HandleClick()
+    {
+        if (OnLinkClick.HasDelegate)
+        {
+            await OnLinkClick.InvokeAsync();
+        }
+    }
+
     protected override void OnInitialized()
     {
         Loc.OnLanguageChanged += StateHasChanged;
