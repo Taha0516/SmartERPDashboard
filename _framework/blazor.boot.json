@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SmartERPDashboard",
   "resources": {
-    "hash": "sha256-gj5XJD4Z9DLZlrkn4dUwNWU6HqtRoZQf4FTfWRPQGAs=",
+    "hash": "sha256-6hR0Mz0tn3VGbGrYAsTwZMo9j/bFShS44invZGy3h4U=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-sn/g61GjVPhViOYQDkq1OMlk0eyS9r2Hi0qgU2o0HIU="
     },
@@ -18,7 +18,7 @@
     },
     "coreAssembly": {},
     "assembly": {
-      "Microsoft.AspNetCore.Components.wasm": "sha256-amGRn4wEDCBUUdHW0T5gjqAO59w2Od3UvVYh7LcO68E=",
+      "Microsoft.AspNetCore.Components.wasm": "sha256-U5LekX8pUjq+Z161CLwkbm53xmUcKlAYC/V4tB1PrkQ=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-tXd7gSQ+3hKJL12XWEoLzrtlVh40Lccr8yUW09gLTqc=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-YttUtWlsM+KneZUZ88pyKYjl+dC0Bl4YFTDvDeJ1Q3k=",
       "Microsoft.Extensions.Configuration.wasm": "sha256-od574rRtVVRJj+24jbl8j3GdQFpxlJOpSx+pEMw1Q18=",
@@ -48,7 +48,7 @@
       "System.Text.RegularExpressions.wasm": "sha256-6VPZ0nXmzA+ujfKikHZ7FUFvtVt4QWJ/cY3SSeYJXnE=",
       "System.Threading.wasm": "sha256-xxupzv/Rv8t0XxpO0lAkJYWV75cxE9ycmHg6WOI09Pg=",
       "System.Private.CoreLib.wasm": "sha256-9g9SPxwvH2cPK61CO9LP7D8p4diuni+OdyS8nCiOcp8=",
-      "SmartERPDashboard.wasm": "sha256-JmL6NIDgLPKtOS+eStawIdk3SFwIsbobzFBEA8sxAOs="
+      "SmartERPDashboard.wasm": "sha256-9w6Ga/eKCCXRRI97Xn7L0zaa8Cp950kGmYOSBHwDKAQ="
     }
   },
   "cacheBootResources": true,
