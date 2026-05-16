@@ -1,0 +1,160 @@
+@page "/customer-experience"
+@inject IMockDataService DataService
+
+<PageTitle>Customer Experience — Smart ERP</PageTitle>
+
+<section class="page-hero">
+    <div class="hero-content">
+        <span class="hero-eyebrow">Customer-Centric Automation</span>
+        <h1 class="hero-title">Customer Experience Simulation</h1>
+        <p class="hero-subtitle">Witness how automation and AI deliver lightning-fast service and around-the-clock intelligent support.</p>
+    </div>
+</section>
+
+<div class="cx-layout">
+
+    <!-- ── Order Tracker ─────────────────────────────────────── -->
+    <section class="cx-panel" aria-label="Order Tracker">
+        <div class="cx-panel__header">
+            <i class="bi bi-truck cx-panel__icon"></i>
+            <div>
+                <h2 class="cx-panel__title">Smart Order Tracker</h2>
+                <p class="cx-panel__subtitle">Automated fulfillment pipeline in real-time</p>
+            </div>
+        </div>
+
+        <div class="order-stages">
+            @for (int i = 0; i < _stages.Length; i++)
+            {
+                int idx = i;
+                <div class="stage-item @(idx < _currentStage ? "stage-done" : idx == _currentStage ? "stage-active" : "stage-pending")">
+                    <div class="stage-node">
+                        @if (idx < _currentStage)
+                        { <i class="bi bi-check-lg"></i> }
+                        else
+                        { <span>@(idx + 1)</span> }
+                    </div>
+                    <div class="stage-info">
+                        <strong>@_stages[idx].Name</strong>
+                        <small>@_stages[idx].Subtitle</small>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="progress-area">
+            <div class="progress-bar-track" role="progressbar" aria-valuenow="@_progressPct" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar-fill" style="width: @_progressPct%"></div>
+            </div>
+            <div class="progress-labels">
+                <span>@_stages[_currentStage < _stages.Length ? _currentStage : _stages.Length - 1].Name</span>
+                <span>@_progressPct%</span>
+            </div>
+        </div>
+
+        @if (_isSimulating)
+        {
+            <div class="sim-status pulse-text">
+                <i class="bi bi-lightning-charge-fill"></i> Automation running…
+            </div>
+        }
+        else if (_progressPct == 100)
+        {
+            <div class="sim-status success-text">
+                <i class="bi bi-box-seam-fill"></i> Order Delivered! ✅ Customer satisfaction secured.
+            </div>
+        }
+
+        <button class="btn-simulate"
+                @onclick="SimulateOrder"
+                disabled="@_isSimulating"
+                aria-busy="@_isSimulating"
+                aria-label="Simulate order processing">
+            @if (_isSimulating)
+            {
+                <span class="spinner"></span>
+                <span>Simulating…</span>
+            }
+            else
+            {
+                <i class="bi bi-play-circle-fill"></i>
+                <span>@(_progressPct == 100 ? "Simulate Again" : "Simulate Order")</span>
+            }
+        </button>
+    </section>
+
+    <!-- ── Chatbot ────────────────────────────────────────────── -->
+    <section class="cx-panel" aria-label="AI Chatbot">
+        <div class="cx-panel__header">
+            <i class="bi bi-chat-dots-fill cx-panel__icon cx-panel__icon--purple"></i>
+            <div>
+                <h2 class="cx-panel__title">24/7 AI Support Bot</h2>
+                <p class="cx-panel__subtitle">Click a question to see instant AI-powered responses</p>
+            </div>
+        </div>
+        <ChatbotUI Entries="_chatEntries" />
+    </section>
+
+</div>
+
+@code {
+    // ── Chatbot ────────────────────────────────────────────────────
+    private List<ChatbotEntry> _chatEntries = new();
+
+    // ── Order Tracker ──────────────────────────────────────────────
+    private record Stage(string Name, string Subtitle);
+
+    private readonly Stage[] _stages = new[]
+    {
+        new Stage("Order Placed",  "Received & validated instantly"),
+        new Stage("Processing",    "AI picks the optimal warehouse route"),
+        new Stage("Shipped",       "Out for delivery via smart logistics"),
+        new Stage("Delivered",     "Confirmed at destination ✔"),
+    };
+
+    private int  _currentStage = 0;
+    private int  _progressPct  = 0;
+    private bool _isSimulating = false;
+
+    protected override void OnInitialized()
+    {
+        _chatEntries = DataService.GetChatbotEntries();
+    }
+
+    private async Task SimulateOrder()
+    {
+        // Reset state
+        _currentStage = 0;
+        _progressPct  = 0;
+        _isSimulating = true;
+        StateHasChanged();
+
+        // Stage 0 → 1  (Processing)
+        await Task.Delay(600);
+        await AdvanceToProgress(25, 0, 1);
+
+        // Stage 1 → 2  (Shipped)
+        await Task.Delay(800);
+        await AdvanceToProgress(65, 1, 2);
+
+        // Stage 2 → 3  (Delivered)
+        await Task.Delay(1000);
+        await AdvanceToProgress(100, 2, 3);
+
+        _isSimulating = false;
+        StateHasChanged();
+    }
+
+    private async Task AdvanceToProgress(int targetPct, int stageFrom, int stageTo)
+    {
+        int step = (targetPct - _progressPct) / 10;
+        while (_progressPct < targetPct)
+        {
+            _progressPct = Math.Min(_progressPct + step + 1, targetPct);
+            StateHasChanged();
+            await Task.Delay(40);
+        }
+        _currentStage = Math.Min(stageTo, _stages.Length - 1);
+        StateHasChanged();
+    }
+}

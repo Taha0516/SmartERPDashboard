@@ -1,0 +1,69 @@
+@page "/tech-toolkit"
+@inject IMockDataService DataService
+
+<PageTitle>Tech Toolkit — Smart ERP</PageTitle>
+
+<section class="page-hero">
+    <div class="hero-content">
+        <span class="hero-eyebrow">Digital Infrastructure</span>
+        <h1 class="hero-title">Technology Toolkit</h1>
+        <p class="hero-subtitle">Explore the four pillars of modern technology that drive organizational competitiveness and sustainable growth.</p>
+    </div>
+</section>
+
+<!-- ── Tech Cards Grid ───────────────────────────────────────── -->
+<section class="toolkit-section" aria-label="Technology Tools">
+    <div class="tech-grid">
+        @foreach (var tool in _tools)
+        {
+            <TechCard Tool="tool" OnCardClick="OpenModal" />
+        }
+    </div>
+</section>
+
+<!-- ── Modal ─────────────────────────────────────────────────── -->
+@if (_isModalOpen && _selectedTool is not null)
+{
+    <div class="modal-backdrop" @onclick="CloseModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-box" @onclick:stopPropagation="true" style="--accent: @_selectedTool.AccentColor">
+            <button class="modal-close" @onclick="CloseModal" aria-label="Close modal">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <div class="modal-icon-wrap">
+                <i class="bi @_selectedTool.Icon modal-icon"></i>
+            </div>
+            <h2 id="modalTitle" class="modal-title">@_selectedTool.Name</h2>
+            <div class="modal-divider"></div>
+            <div class="modal-body">
+                <p class="modal-line"><i class="bi bi-check-circle-fill modal-check"></i>@_selectedTool.DetailLine1</p>
+                <p class="modal-line"><i class="bi bi-check-circle-fill modal-check"></i>@_selectedTool.DetailLine2</p>
+            </div>
+            <div class="modal-footer-tag">
+                <i class="bi bi-bar-chart-line-fill"></i>&nbsp; Proven Competitive Advantage
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<TechTool> _tools = new();
+    private bool _isModalOpen = false;
+    private TechTool? _selectedTool;
+
+    protected override void OnInitialized()
+    {
+        _tools = DataService.GetTechTools();
+    }
+
+    private void OpenModal(TechTool tool)
+    {
+        _selectedTool = tool;
+        _isModalOpen  = true;
+    }
+
+    private void CloseModal()
+    {
+        _isModalOpen  = false;
+        _selectedTool = null;
+    }
+}

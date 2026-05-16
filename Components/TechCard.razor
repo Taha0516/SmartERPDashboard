@@ -1,0 +1,33 @@
+@* ──────────────────────────────────────────────────────────────
+   TechCard.razor — Clickable technology tool card.
+   Parameters: Tool (TechTool), OnCardClick (EventCallback)
+   ────────────────────────────────────────────────────────────── *@
+
+<div class="tech-card"
+     style="--accent: @Tool.AccentColor"
+     @onclick="() => OnCardClick.InvokeAsync(Tool)"
+     role="button"
+     tabindex="0"
+     aria-label="Learn more about @Tool.Name"
+     @onkeydown="HandleKeyDown">
+    <div class="tech-card__icon-wrap">
+        <i class="bi @Tool.Icon tech-card__icon"></i>
+    </div>
+    <h3 class="tech-card__name">@Tool.Name</h3>
+    <p class="tech-card__desc">@Tool.ShortDescription</p>
+    <span class="tech-card__cta">Explore Impact <i class="bi bi-arrow-right-short"></i></span>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public TechTool Tool { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public EventCallback<TechTool> OnCardClick { get; set; }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" || e.Key == " ")
+            await OnCardClick.InvokeAsync(Tool);
+    }
+}

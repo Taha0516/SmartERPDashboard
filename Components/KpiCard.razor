@@ -1,0 +1,27 @@
+@* ──────────────────────────────────────────────────────────────
+   KpiCard.razor — Reusable Key Performance Indicator card.
+   Parameters: Metric (KpiMetric model)
+   ────────────────────────────────────────────────────────────── *@
+
+<div class="kpi-card @Metric.ColorClass" role="article" aria-label="@Metric.Title KPI">
+    <div class="kpi-card__header">
+        <span class="kpi-card__icon">
+            <i class="bi @Metric.Icon"></i>
+        </span>
+        <span class="kpi-badge @(Metric.IsPositiveTrend ? "badge-positive" : "badge-neutral")">
+            @Metric.Trend
+        </span>
+    </div>
+    <div class="kpi-card__body">
+        <p class="kpi-card__title">@Metric.Title</p>
+        <div class="kpi-card__value-row">
+            <span class="kpi-card__value">@Metric.Value</span>
+            <span class="kpi-card__unit">@Metric.Unit</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public KpiMetric Metric { get; set; } = default!;
+}
