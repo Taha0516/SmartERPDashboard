@@ -23,7 +23,7 @@
         <span class="toggle-label @(_afterTech ? "active-label" : "")">@Loc.T("After Tech")</span>
     </div>
     <p class="toggle-state-text">
-        Currently viewing:&nbsp;
+        @Loc.T("Currently viewing:")&nbsp;
         <strong class="state-badge @(_afterTech ? "badge-after" : "badge-before")">
             @(_afterTech ? Loc.T("✅ Post-Digital Transformation") : Loc.T("⚠️ Pre-Digital Transformation"))
         </strong>
@@ -67,13 +67,20 @@
 
     protected override void OnInitialized()
     {
-        Loc.OnLanguageChanged += StateHasChanged;
+        Loc.OnLanguageChanged += OnLanguageChanged;
         LoadData();
     }
 
     public void Dispose()
     {
-        Loc.OnLanguageChanged -= StateHasChanged;
+        Loc.OnLanguageChanged -= OnLanguageChanged;
+    }
+
+    private async void OnLanguageChanged()
+    {
+        LoadData();
+        StateHasChanged();
+        await UpdateChart();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
