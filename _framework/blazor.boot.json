@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SmartERPDashboard",
   "resources": {
-    "hash": "sha256-h0ajcesllOybNU6PTUaU7QgZHGqccdI86uWf2MGuuLQ=",
+    "hash": "sha256-zU6dP/tSfRAfPVBTRO5zR5ptt5mkawSoHTyy8xi7XpQ=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-sn/g61GjVPhViOYQDkq1OMlk0eyS9r2Hi0qgU2o0HIU="
     },
@@ -18,7 +18,7 @@
     },
     "coreAssembly": {},
     "assembly": {
-      "Microsoft.AspNetCore.Components.wasm": "sha256-U5LekX8pUjq+Z161CLwkbm53xmUcKlAYC/V4tB1PrkQ=",
+      "Microsoft.AspNetCore.Components.wasm": "sha256-z/d24CrYJ9hzp6T1GE1nNcOZ8omolhGYYI8f1/GKRIM=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-tXd7gSQ+3hKJL12XWEoLzrtlVh40Lccr8yUW09gLTqc=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-YttUtWlsM+KneZUZ88pyKYjl+dC0Bl4YFTDvDeJ1Q3k=",
       "Microsoft.Extensions.Configuration.wasm": "sha256-od574rRtVVRJj+24jbl8j3GdQFpxlJOpSx+pEMw1Q18=",
@@ -33,22 +33,22 @@
       "Microsoft.JSInterop.wasm": "sha256-yYSIGAZt44I/rafsJpvCIcJTMCNuL5/Ck7LHiUtNs70=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-UFB+2RHRiffv/kpP3onPVdxXxmwJA6oo3dI1M+LiZOU=",
       "System.Collections.Concurrent.wasm": "sha256-YFRGPUB4BaSD5WHY7Y3/7LBButq/cKGqPMzsrMCmDhQ=",
-      "System.Collections.wasm": "sha256-zXQ/D+LE8rACh5Pncocfgm0Z7KkB8TIGstE+ZYkN+ZY=",
+      "System.Collections.wasm": "sha256-MvXnCUYN6SE4T7MJWPyDV9InCcWh70Pv2zAjNebif4c=",
       "System.ComponentModel.wasm": "sha256-m0ow8J0ELUpYQfZXbeUdVcJDENLYDJo7k6LwNqgkFrc=",
       "System.Console.wasm": "sha256-MYqGf3/RUK/L14eXZZJ8lRG9q9Oynn0FC/kAw0YpMW8=",
-      "System.Linq.wasm": "sha256-PV8VBSY1UTV7jEnDNABo912lyksDNKe7kjoslQyxN9U=",
+      "System.Linq.wasm": "sha256-hxHt6b+d8n+WWuP9+Ceg11/kVc6NHty/O6ntb/D54Ps=",
       "System.Memory.wasm": "sha256-RgJ5T/q7g2ZtzYuhbHrT7F+ZOfxSHvC+xts4JjrspUM=",
       "System.Net.Http.wasm": "sha256-vayM7GFNDVHhyBXKLWoak3qxJ3oxbEdKzYkmTBo65UA=",
       "System.Net.Primitives.wasm": "sha256-VmYT04cIe+6fcjASxcGAzBL56WW1J152FpK9sTHymO8=",
       "System.Private.Uri.wasm": "sha256-Wm45ochLZrWJmVDdKnPfVA64VuWuPRWUVaPoBnq/qnA=",
       "System.Runtime.InteropServices.JavaScript.wasm": "sha256-KiJxa6wkvatNKur6q4ZSOVO3O04kh6HlQ0c7yyKnhrM=",
-      "System.Runtime.wasm": "sha256-kjE84W6HN0B092GPCVg/fjr+t/sWLPlGZd5/LttBbRY=",
+      "System.Runtime.wasm": "sha256-h8i5PyFpBsU5pQxK9+7NHbWYHFLxn2WXilSQG53BU58=",
       "System.Text.Encodings.Web.wasm": "sha256-UGsgUZV3Er8ms7Aw6V+HTiVBhBRFgOzwLTK1Bm+nTGk=",
       "System.Text.Json.wasm": "sha256-2uX7GxTvQ2oMynwAqZJOjTeb1uKdNYBmq3GqVrd3XzY=",
       "System.Text.RegularExpressions.wasm": "sha256-6VPZ0nXmzA+ujfKikHZ7FUFvtVt4QWJ/cY3SSeYJXnE=",
       "System.Threading.wasm": "sha256-xxupzv/Rv8t0XxpO0lAkJYWV75cxE9ycmHg6WOI09Pg=",
-      "System.Private.CoreLib.wasm": "sha256-9g9SPxwvH2cPK61CO9LP7D8p4diuni+OdyS8nCiOcp8=",
-      "SmartERPDashboard.wasm": "sha256-Kk00y6cP+gAhR0uYQWDHkoDhahDs826wfFNzD6noAMg="
+      "System.Private.CoreLib.wasm": "sha256-hxBk05SNnbl4QucxanNxFyW0AaR/EYzYxpuB3keDx5g=",
+      "SmartERPDashboard.wasm": "sha256-PZ99YvBXf74MytM1WlpzCNf2xX2pGECwdfdDwjVCIFc="
     }
   },
   "cacheBootResources": true,
