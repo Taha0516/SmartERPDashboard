@@ -1,0 +1,268 @@
+@page "/roi-calculator"
+@inject IMockDataService DataService
+@inject IJSRuntime JS
+
+<PageTitle>ROI Calculator — Smart ERP</PageTitle>
+
+<section class="page-hero">
+    <div class="hero-content">
+        <span class="hero-eyebrow">@Loc.T("Investment Analysis")</span>
+        <h1 class="hero-title">@Loc.T("Digital Transformation ROI Calculator")</h1>
+        <p class="hero-subtitle">@Loc.T("Calculate your projected return on investment from implementing modern ERP technologies.")</p>
+    </div>
+</section>
+
+<div class="roi-layout">
+    <!-- ── Input Panel ────────────────────────────────────────── -->
+    <section class="roi-panel" aria-label="Calculator Inputs">
+        <div class="roi-panel__header">
+            <i class="bi bi-calculator roi-panel__icon"></i>
+            <div>
+                <h2 class="roi-panel__title">@Loc.T("Your Organization")</h2>
+                <p class="roi-panel__subtitle">@Loc.T("Enter your details to see personalized projections")</p>
+            </div>
+        </div>
+
+        <div class="roi-form">
+            <div class="form-group">
+                <label for="industry">@Loc.T("Industry")</label>
+                <select id="industry" class="form-select" @bind="_selectedIndustry">
+                    @foreach (var benchmark in _benchmarks)
+                    {
+                        <option value="@benchmark.Industry">@benchmark.Industry</option>
+                    }
+                </select>
+                <small class="form-help">@_selectedBenchmark?.Description</small>
+            </div>
+
+            <div class="form-group">
+                <label for="employees">@Loc.T("Number of Employees")</label>
+                <input type="number" id="employees" class="form-input" @bind="_employeeCount" min="1" max="100000" />
+            </div>
+
+            <div class="form-group">
+                <label for="revenue">@Loc.T("Annual Revenue ($)")</label>
+                <input type="number" id="revenue" class="form-input" @bind="_annualRevenue" min="0" step="10000" />
+            </div>
+
+            <div class="form-group">
+                <label for="techSpend">@Loc.T("Current Annual Tech Spend ($)")</label>
+                <input type="number" id="techSpend" class="form-input" @bind="_currentTechSpend" min="0" step="1000" />
+            </div>
+
+            <button class="btn-calculate" @onclick="CalculateROI">
+                <i class="bi bi-arrow-right-circle"></i>
+                <span>@Loc.T("Calculate ROI")</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ── Results Panel ───────────────────────────────────────── -->
+    <section class="roi-panel roi-results" aria-label="Calculation Results">
+        <div class="roi-panel__header">
+            <i class="bi bi-graph-up-arrow roi-panel__icon roi-panel__icon--success"></i>
+            <div>
+                <h2 class="roi-panel__title">@Loc.T("Projected Results")</h2>
+                <p class="roi-panel__subtitle">@Loc.T("Based on industry benchmarks and your inputs")</p>
+            </div>
+        </div>
+
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+                <div class="result-value">@FormatCurrency(_projectedSavings)</div>
+                <div class="result-label">@Loc.T("Annual Savings")</div>
+                <div class="result-trend positive">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>@_efficiencyGain.ToString("F0")% @Loc.T("efficiency gain")</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-icon icon-purple">
+                    <i class="bi bi-calendar3"></i>
+                </div>
+                <div class="result-value">@_paybackMonths.ToString("F1")</div>
+                <div class="result-label">@Loc.T("Payback Period (months)")</div>
+                <div class="result-trend">
+                    <span>@Loc.T("Break-even timeline")</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-icon icon-teal">
+                    <i class="bi bi-trophy"></i>
+                </div>
+                <div class="result-value">@_threeYearROI.ToString("F0")%</div>
+                <div class="result-label">@Loc.T("3-Year ROI")</div>
+                <div class="result-trend positive">
+                    <i class="bi bi-graph-up"></i>
+                    <span>@Loc.T("Cumulative return")</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-icon icon-orange">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div class="result-value">@FormatCurrency(_perEmployeeSavings)</div>
+                <div class="result-label">@Loc.T("Savings per Employee")</div>
+                <div class="result-trend">
+                    <span>@Loc.T("Annual benefit per person")</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-wrapper roi-chart">
+            <canvas id="roiChart" aria-label="ROI projection chart"></canvas>
+        </div>
+    </section>
+</div>
+
+<!-- ── Industry Benchmarks ───────────────────────────────────── -->
+<section class="benchmark-section" aria-label="Industry Benchmarks">
+    <h2 class="section-heading">@Loc.T("Industry Benchmarks")</h2>
+    <div class="benchmark-grid">
+        @foreach (var benchmark in _benchmarks)
+        {
+            <div class="benchmark-card @(_selectedIndustry == benchmark.Industry ? "benchmark-card--active" : "")" @onclick="() => SelectIndustry(benchmark.Industry)">
+                <div class="benchmark-header">
+                    <h3>@benchmark.Industry</h3>
+                    <i class="bi bi-check-circle-fill benchmark-check"></i>
+                </div>
+                <p class="benchmark-desc">@benchmark.Description</p>
+                <div class="benchmark-stats">
+                    <div class="benchmark-stat">
+                        <span class="stat-value">+@benchmark.AvgEfficiencyGain.ToString("F0")%</span>
+                        <span class="stat-label">@Loc.T("Efficiency")</span>
+                    </div>
+                    <div class="benchmark-stat">
+                        <span class="stat-value">-@benchmark.AvgCostReduction.ToString("F0")%</span>
+                        <span class="stat-label">@Loc.T("Cost Reduction")</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    private List<IndustryBenchmark> _benchmarks = new();
+    private string _selectedIndustry = "Technology";
+    private int _employeeCount = 100;
+    private decimal _annualRevenue = 10000000;
+    private decimal _currentTechSpend = 200000;
+    
+    private decimal _projectedSavings = 0;
+    private decimal _efficiencyGain = 42;
+    private decimal _paybackMonths = 8;
+    private decimal _threeYearROI = 340;
+    private decimal _perEmployeeSavings = 0;
+
+    private IndustryBenchmark? _selectedBenchmark => _benchmarks.FirstOrDefault(b => b.Industry == _selectedIndustry);
+
+    protected override void OnInitialized()
+    {
+        Loc.OnLanguageChanged += OnLanguageChanged;
+        _benchmarks = DataService.GetIndustryBenchmarks();
+        CalculateROI();
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged()
+    {
+        _benchmarks = DataService.GetIndustryBenchmarks();
+        StateHasChanged();
+    }
+
+    private void SelectIndustry(string industry)
+    {
+        _selectedIndustry = industry;
+        CalculateROI();
+    }
+
+    private void CalculateROI()
+    {
+        var benchmark = _selectedBenchmark;
+        if (benchmark == null) return;
+
+        // Calculate projected savings based on efficiency gain and cost reduction
+        decimal laborCost = _annualRevenue * 0.3m; // Assume 30% of revenue is labor cost
+        decimal operationalCost = _annualRevenue * 0.4m; // Assume 40% is operational
+
+        decimal laborSavings = laborCost * (benchmark.AvgEfficiencyGain / 100m);
+        decimal operationalSavings = operationalCost * (benchmark.AvgCostReduction / 100m);
+        
+        _projectedSavings = laborSavings + operationalSavings;
+        _efficiencyGain = benchmark.AvgEfficiencyGain;
+        _perEmployeeSavings = _employeeCount > 0 ? _projectedSavings / _employeeCount : 0;
+
+        // Calculate payback period (assuming new tech investment is 1.5x current spend)
+        decimal newTechInvestment = _currentTechSpend * 1.5m;
+        decimal netAnnualBenefit = _projectedSavings - (newTechInvestment - _currentTechSpend);
+        _paybackMonths = netAnnualBenefit > 0 ? (newTechInvestment / netAnnualBenefit) * 12 : 0;
+
+        // Calculate 3-year ROI
+        decimal threeYearBenefit = netAnnualBenefit * 3;
+        _threeYearROI = newTechInvestment > 0 ? ((threeYearBenefit - newTechInvestment) / newTechInvestment) * 100 : 0;
+
+        StateHasChanged();
+        _ = RenderROIChart();
+    }
+
+    private string FormatCurrency(decimal value)
+    {
+        if (value >= 1000000)
+            return "$" + (value / 1000000m).ToString("F1") + "M";
+        if (value >= 1000)
+            return "$" + (value / 1000m).ToString("F0") + "K";
+        return "$" + value.ToString("F0");
+    }
+
+    private async Task RenderROIChart()
+    {
+        var chartData = new ChartData
+        {
+            Labels = new() { Loc.T("Year 1"), Loc.T("Year 2"), Loc.T("Year 3") },
+            Datasets = new()
+            {
+                new()
+                {
+                    Label = Loc.T("Cumulative Savings"),
+                    Data = new() 
+                    { 
+                        (double)(_projectedSavings * 0.7m), 
+                        (double)(_projectedSavings * 1.8m), 
+                        (double)(_projectedSavings * 2.9m) 
+                    },
+                    BorderColor = "rgba(56, 189, 248, 1)",
+                    BackgroundColor = "rgba(56, 189, 248, 0.2)",
+                    Fill = true,
+                    Tension = 4
+                },
+                new()
+                {
+                    Label = Loc.T("Tech Investment"),
+                    Data = new() 
+                    { 
+                        (double)(_currentTechSpend * 1.5m), 
+                        (double)(_currentTechSpend * 1.6m), 
+                        (double)(_currentTechSpend * 1.7m) 
+                    },
+                    BorderColor = "rgba(251, 146, 60, 1)",
+                    BackgroundColor = "rgba(251, 146, 60, 0.1)",
+                    Fill = false,
+                    Tension = 2
+                }
+            }
+        };
+
+        await JS.InvokeVoidAsync("SmartERP.initChart", "roiChart", chartData);
+    }
+}

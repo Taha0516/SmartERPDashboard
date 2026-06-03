@@ -1,0 +1,283 @@
+@page "/operations-center"
+@inject IMockDataService DataService
+
+<PageTitle>Operations Center — Smart ERP</PageTitle>
+
+<section class="page-hero">
+    <div class="hero-content">
+        <span class="hero-eyebrow">@Loc.T("Operational Excellence")</span>
+        <h1 class="hero-title">@Loc.T("Operations & Efficiency Center")</h1>
+        <p class="hero-subtitle">@Loc.T("Experience how automation transforms production, inventory, and quality workflows in real-time.")</p>
+    </div>
+</section>
+
+<!-- ── Workflow Selector ─────────────────────────────────────── -->
+<div class="workflow-tabs" role="tablist">
+    @for (int i = 0; i < _workflows.Count; i++)
+    {
+        int idx = i;
+        var workflow = _workflows[i];
+        <button class="workflow-tab @(_selectedWorkflowIndex == idx ? "tab-active" : "")" 
+                @onclick="() => SelectWorkflow(idx)"
+                role="tab"
+                aria-selected="@(_selectedWorkflowIndex == idx)">
+            <i class="bi @workflow.Icon"></i>
+            <span>@workflow.Name</span>
+        </button>
+    }
+</div>
+
+<!-- ── Active Workflow Display ─────────────────────────────── -->
+@if (_selectedWorkflow is not null)
+{
+    <div class="workflow-container">
+        <div class="workflow-header">
+            <div class="workflow-info">
+                <h2 class="workflow-title">@_selectedWorkflow.Name</h2>
+                <p class="workflow-desc">@_selectedWorkflow.Description</p>
+            </div>
+            <div class="workflow-stats">
+                <div class="wf-stat">
+                    <span class="wf-stat-value">@_selectedWorkflow.EfficiencyImprovement%</span>
+                    <span class="wf-stat-label">@Loc.T("Efficiency Gain")</span>
+                </div>
+                <div class="wf-stat">
+                    <span class="wf-stat-value">@_selectedWorkflow.TotalTimeSaved @Loc.T("hrs")</span>
+                    <span class="wf-stat-label">@Loc.T("Weekly Time Saved")</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Stage Timeline ─────────────────────────────────── -->
+        <div class="stage-timeline">
+            @for (int i = 0; i < _selectedWorkflow.Stages.Count; i++)
+            {
+                int idx = i;
+                var stage = _selectedWorkflow.Stages[i];
+                var isActive = idx == _currentStageIndex;
+                var isCompleted = idx < _currentStageIndex;
+                var isPending = idx > _currentStageIndex;
+                
+                <div class="stage-item @(isActive ? "stage-active" : isCompleted ? "stage-completed" : "stage-pending")"
+                     @onclick="() => SelectStage(idx)">
+                    <div class="stage-node @stage.ColorClass">
+                        @if (isCompleted)
+                        {
+                            <i class="bi bi-check-lg"></i>
+                        }
+                        else
+                        {
+                            <span>@(idx + 1)</span>
+                        }
+                    </div>
+                    <div class="stage-content">
+                        <h3 class="stage-name">@stage.Name</h3>
+                        <p class="stage-desc">@stage.Description</p>
+                        
+                        @if (isActive || isCompleted)
+                        {
+                            <div class="stage-timings">
+                                <div class="timing-row">
+                                    <span class="timing-label">@Loc.T("Before Tech:")</span>
+                                    <span class="timing-value timing-slow">@stage.DurationMinutesBeforeTech @Loc.T("min")</span>
+                                </div>
+                                <div class="timing-row">
+                                    <span class="timing-label">@Loc.T("After Tech:")</span>
+                                    <span class="timing-value timing-fast">@stage.DurationMinutes @Loc.T("min")</span>
+                                </div>
+                                <div class="timing-savings">
+                                    <i class="bi bi-lightning-charge-fill"></i>
+                                    <span>@CalculateSavings(stage) @Loc.T("time saved")</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @if (i < _selectedWorkflow.Stages.Count - 1)
+                    {
+                        <div class="stage-connector @(isCompleted ? "connector-completed" : "")"></div>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- ── Simulation Controls ───────────────────────────── -->
+        <div class="simulation-controls">
+            <button class="btn-simulate @(_isSimulating ? "btn-simulating" : "")" 
+                    @onclick="ToggleSimulation"
+                    disabled="@_isSimulating">
+                @if (_isSimulating)
+                {
+                    <span class="spinner"></span>
+                    <span>@Loc.T("Running Simulation...")</span>
+                }
+                else
+                {
+                    <i class="bi bi-play-fill"></i>
+                    <span>@(_currentStageIndex >= _selectedWorkflow.Stages.Count - 1 ? Loc.T("Restart Simulation") : Loc.T("Run Workflow Simulation"))</span>
+                }
+            </button>
+            
+            <div class="simulation-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: @(_simulationProgress)%"></div>
+                </div>
+                <span class="progress-text">@_simulationProgress%</span>
+            </div>
+        </div>
+
+        <!-- ── Task List ───────────────────────────────────────── -->
+        @if (_currentStage?.Tasks?.Any() == true)
+        {
+            <div class="task-panel">
+                <h3 class="task-heading">
+                    <i class="bi bi-list-check"></i>
+                    @Loc.T("Automated Tasks")
+                </h3>
+                <div class="task-list">
+                    @for (int i = 0; i < _currentStage.Tasks.Count; i++)
+                    {
+                        int idx = i;
+                        var task = _currentStage.Tasks[i];
+                        <div class="task-item @(_completedTasks.Contains(idx) ? "task-completed" : "")">
+                            <div class="task-checkbox">
+                                @if (_completedTasks.Contains(idx))
+                                {
+                                    <i class="bi bi-check-circle-fill"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-circle"></i>
+                                }
+                            </div>
+                            <span class="task-text">@task</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<!-- ── Efficiency Summary ───────────────────────────────────── -->
+<section class="efficiency-section" aria-label="Efficiency Summary">
+    <h2 class="section-heading">@Loc.T("Efficiency Impact Summary")</h2>
+    <div class="efficiency-grid">
+        @foreach (var workflow in _workflows)
+        {
+            <div class="efficiency-card">
+                <div class="eff-icon">
+                    <i class="bi @workflow.Icon"></i>
+                </div>
+                <h3>@workflow.Name</h3>
+                <div class="eff-metrics">
+                    <div class="eff-metric">
+                        <span class="eff-value">@workflow.EfficiencyImprovement%</span>
+                        <span class="eff-label">@Loc.T("Faster")</span>
+                    </div>
+                    <div class="eff-metric">
+                        <span class="eff-value">@workflow.TotalTimeSaved @Loc.T("hrs")</span>
+                        <span class="eff-label">@Loc.T("Saved/Week")</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    private List<OperationWorkflow> _workflows = new();
+    private int _selectedWorkflowIndex = 0;
+    private int _currentStageIndex = 0;
+    private bool _isSimulating = false;
+    private int _simulationProgress = 0;
+    private HashSet<int> _completedTasks = new();
+
+    private OperationWorkflow? _selectedWorkflow => _workflows.Count > _selectedWorkflowIndex ? _workflows[_selectedWorkflowIndex] : null;
+    private OperationStage? _currentStage => _selectedWorkflow?.Stages.Count > _currentStageIndex ? _selectedWorkflow.Stages[_currentStageIndex] : null;
+
+    protected override void OnInitialized()
+    {
+        Loc.OnLanguageChanged += OnLanguageChanged;
+        LoadData();
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged()
+    {
+        LoadData();
+        StateHasChanged();
+    }
+
+    private void LoadData()
+    {
+        _workflows = DataService.GetOperationWorkflows();
+        _currentStageIndex = 0;
+        _completedTasks.Clear();
+    }
+
+    private void SelectWorkflow(int index)
+    {
+        _selectedWorkflowIndex = index;
+        _currentStageIndex = 0;
+        _simulationProgress = 0;
+        _completedTasks.Clear();
+        _isSimulating = false;
+    }
+
+    private void SelectStage(int index)
+    {
+        _currentStageIndex = index;
+        _completedTasks.Clear();
+    }
+
+    private async Task ToggleSimulation()
+    {
+        if (_isSimulating) return;
+        
+        _isSimulating = true;
+        _currentStageIndex = 0;
+        _completedTasks.Clear();
+        _simulationProgress = 0;
+
+        var workflow = _selectedWorkflow;
+        if (workflow == null) return;
+
+        for (int i = 0; i < workflow.Stages.Count; i++)
+        {
+            _currentStageIndex = i;
+            _completedTasks.Clear();
+            
+            // Animate through tasks
+            if (workflow.Stages[i].Tasks?.Any() == true)
+            {
+                for (int t = 0; t < workflow.Stages[i].Tasks.Count; t++)
+                {
+                    _completedTasks.Add(t);
+                    _simulationProgress = (int)(((i * workflow.Stages[i].Tasks.Count + t + 1) / (double)(workflow.Stages.Count * workflow.Stages[i].Tasks.Count)) * 100);
+                    StateHasChanged();
+                    await Task.Delay(400);
+                }
+            }
+            else
+            {
+                _simulationProgress = (int)(((i + 1) / (double)workflow.Stages.Count) * 100);
+                StateHasChanged();
+                await Task.Delay(800);
+            }
+        }
+
+        _isSimulating = false;
+        StateHasChanged();
+    }
+
+    private string CalculateSavings(OperationStage stage)
+    {
+        if (stage.DurationMinutesBeforeTech == 0) return "100%";
+        var savings = ((stage.DurationMinutesBeforeTech - stage.DurationMinutes) / (double)stage.DurationMinutesBeforeTech) * 100;
+        return savings.ToString("F0") + "%";
+    }
+}

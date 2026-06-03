@@ -1,0 +1,235 @@
+@page "/team-collaboration"
+@inject IMockDataService DataService
+@inject IJSRuntime JS
+
+<PageTitle>Team Collaboration — Smart ERP</PageTitle>
+
+<section class="page-hero">
+    <div class="hero-content">
+        <span class="hero-eyebrow">@Loc.T("Connected Workforce")</span>
+        <h1 class="hero-title">@Loc.T("Team Collaboration Hub")</h1>
+        <p class="hero-subtitle">@Loc.T("Discover how modern collaboration tools break down silos and accelerate teamwork across your organization.")</p>
+    </div>
+</section>
+
+<!-- ── Collaboration Metrics ─────────────────────────────────── -->
+<section class="collab-metrics-section" aria-label="Collaboration Metrics">
+    <h2 class="section-heading">@Loc.T("Collaboration Impact")</h2>
+    <div class="collab-metrics-grid">
+        @foreach (var metric in _metrics)
+        {
+            <div class="collab-metric-card @metric.ColorClass">
+                <div class="metric-header">
+                    <i class="bi @metric.Icon"></i>
+                    <span class="metric-trend @(metric.IsPositiveTrend ? "trend-up" : "trend-down")">
+                        @metric.Trend
+                    </span>
+                </div>
+                <div class="metric-value">
+                    <span class="value-number">@metric.Value</span>
+                    <span class="value-unit">@metric.Unit</span>
+                </div>
+                <div class="metric-label">@metric.Title</div>
+                <p class="metric-desc">@metric.Description</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- ── Productivity Chart ──────────────────────────────────── -->
+<section class="chart-section" aria-label="Productivity Comparison">
+    <div class="chart-card">
+        <div class="chart-card__header">
+            <div>
+                <h2 class="chart-title">@Loc.T("Work Mode Productivity Index")</h2>
+                <p class="chart-subtitle">@Loc.T("Comparing productivity across different work arrangements")</p>
+            </div>
+            <div class="chart-legend-chips">
+                <span class="legend-chip chip-purple">@Loc.T("Hybrid")</span>
+                <span class="legend-chip chip-blue">@Loc.T("Remote")</span>
+                <span class="legend-chip chip-gray">@Loc.T("Office")</span>
+            </div>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="productivityChart" aria-label="Bar chart comparing productivity by work mode"></canvas>
+        </div>
+    </div>
+</section>
+
+<!-- ── Collaboration Tools ───────────────────────────────────── -->
+<section class="tools-section" aria-label="Collaboration Tools">
+    <h2 class="section-heading">@Loc.T("Collaboration Toolkit")</h2>
+    <p class="section-subtitle">@Loc.T("Explore the before and after of digital collaboration transformation")</p>
+    
+    <div class="tools-grid">
+        @foreach (var tool in _tools)
+        {
+            <div class="tool-card @(_expandedTool == tool.Id ? "tool-card--expanded" : "")" 
+                 style="--accent-color: @tool.AccentColor">
+                <div class="tool-header" @onclick="() => ToggleTool(tool.Id)">
+                    <div class="tool-icon" style="background-color: @tool.AccentColor">
+                        <i class="bi @tool.Icon"></i>
+                    </div>
+                    <div class="tool-info">
+                        <span class="tool-category">@tool.Category</span>
+                        <h3 class="tool-name">@tool.Name</h3>
+                    </div>
+                    <div class="tool-toggle">
+                        <i class="bi @(_expandedTool == tool.Id ? "bi-chevron-up" : "bi-chevron-down")"></i>
+                    </div>
+                </div>
+                
+                <p class="tool-description">@tool.ShortDescription</p>
+                
+                @if (_expandedTool == tool.Id)
+                {
+                    <div class="tool-comparison">
+                        <div class="comparison-col comparison-before">
+                            <div class="comparison-header">
+                                <i class="bi bi-x-circle"></i>
+                                <span>@Loc.T("Before")</span>
+                            </div>
+                            <p>@tool.BeforeScenario</p>
+                        </div>
+                        <div class="comparison-arrow">
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+                        <div class="comparison-col comparison-after">
+                            <div class="comparison-header">
+                                <i class="bi bi-check-circle"></i>
+                                <span>@Loc.T("After")</span>
+                            </div>
+                            <p>@tool.AfterScenario</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-savings">
+                        <div class="savings-badge">
+                            <i class="bi bi-clock-history"></i>
+                            <span>@tool.TimeSavedPercent% @Loc.T("time saved")</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+<!-- ── Collaboration Stats ─────────────────────────────────── -->
+<section class="stats-section" aria-label="Collaboration Statistics">
+    <div class="stats-container">
+        <div class="stat-block">
+            <i class="bi bi-globe"></i>
+            <div class="stat-content">
+                <span class="stat-number">24/7</span>
+                <span class="stat-text">@Loc.T("Global Team Access")</span>
+            </div>
+        </div>
+        <div class="stat-block">
+            <i class="bi bi-lightning-charge"></i>
+            <div class="stat-content">
+                <span class="stat-number">-68%</span>
+                <span class="stat-text">@Loc.T("Meeting Setup Time")</span>
+            </div>
+        </div>
+        <div class="stat-block">
+            <i class="bi bi-people-fill"></i>
+            <div class="stat-content">
+                <span class="stat-number">+156%</span>
+                <span class="stat-text">@Loc.T("Cross-Functional Projects")</span>
+            </div>
+        </div>
+        <div class="stat-block">
+            <i class="bi bi-graph-up-arrow"></i>
+            <div class="stat-content">
+                <span class="stat-number">89%</span>
+                <span class="stat-text">@Loc.T("Employee Satisfaction")</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<CollaborationMetric> _metrics = new();
+    private List<CollaborationTool> _tools = new();
+    private TeamProductivityData _productivityData = new();
+    private string? _expandedTool = null;
+
+    protected override void OnInitialized()
+    {
+        Loc.OnLanguageChanged += OnLanguageChanged;
+        LoadData();
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged()
+    {
+        LoadData();
+        StateHasChanged();
+        _ = RenderChart();
+    }
+
+    private void LoadData()
+    {
+        _metrics = DataService.GetCollaborationMetrics();
+        _tools = DataService.GetCollaborationTools();
+        _productivityData = DataService.GetTeamProductivityData();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await RenderChart();
+        }
+    }
+
+    private void ToggleTool(string toolId)
+    {
+        _expandedTool = _expandedTool == toolId ? null : toolId;
+    }
+
+    private async Task RenderChart()
+    {
+        var chartData = new ChartData
+        {
+            Labels = _productivityData.Labels,
+            Datasets = new()
+            {
+                new()
+                {
+                    Label = Loc.T("Hybrid Work"),
+                    Data = _productivityData.HybridProductivity,
+                    BorderColor = "rgba(167, 139, 250, 1)",
+                    BackgroundColor = "rgba(167, 139, 250, 0.7)",
+                    Fill = false,
+                    Tension = 0
+                },
+                new()
+                {
+                    Label = Loc.T("Remote Work"),
+                    Data = _productivityData.RemoteProductivity,
+                    BorderColor = "rgba(56, 189, 248, 1)",
+                    BackgroundColor = "rgba(56, 189, 248, 0.7)",
+                    Fill = false,
+                    Tension = 0
+                },
+                new()
+                {
+                    Label = Loc.T("Office Work"),
+                    Data = _productivityData.OfficeProductivity,
+                    BorderColor = "rgba(148, 163, 184, 1)",
+                    BackgroundColor = "rgba(148, 163, 184, 0.7)",
+                    Fill = false,
+                    Tension = 0
+                }
+            }
+        };
+
+        await JS.InvokeVoidAsync("SmartERP.initChart", "productivityChart", chartData);
+    }
+}

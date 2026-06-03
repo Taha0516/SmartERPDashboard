@@ -18,4 +18,19 @@ public interface IMockDataService
 
     /// <summary>Returns predefined chatbot Q&amp;A pairs.</summary>
     List<ChatbotEntry> GetChatbotEntries();
+
+    /// <summary>Returns industry benchmarks for ROI calculations.</summary>
+    List<IndustryBenchmark> GetIndustryBenchmarks();
+
+    /// <summary>Returns operational workflow simulations.</summary>
+    List<OperationWorkflow> GetOperationWorkflows();
+
+    /// <summary>Returns collaboration metrics.</summary>
+    List<CollaborationMetric> GetCollaborationMetrics();
+
+    /// <summary>Returns collaboration tools showcase.</summary>
+    List<CollaborationTool> GetCollaborationTools();
+
+    /// <summary>Returns team productivity data for charts.</summary>
+    TeamProductivityData GetTeamProductivityData();
 }
