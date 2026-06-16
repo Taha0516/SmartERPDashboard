@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SmartERPDashboard",
   "resources": {
-    "hash": "sha256-zU6dP/tSfRAfPVBTRO5zR5ptt5mkawSoHTyy8xi7XpQ=",
+    "hash": "sha256-o4N+koBgplD4WAgnhyAqr/Go1DpS+wNiPFWiSZdC1H8=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-sn/g61GjVPhViOYQDkq1OMlk0eyS9r2Hi0qgU2o0HIU="
     },
@@ -48,7 +48,7 @@
       "System.Text.RegularExpressions.wasm": "sha256-6VPZ0nXmzA+ujfKikHZ7FUFvtVt4QWJ/cY3SSeYJXnE=",
       "System.Threading.wasm": "sha256-xxupzv/Rv8t0XxpO0lAkJYWV75cxE9ycmHg6WOI09Pg=",
       "System.Private.CoreLib.wasm": "sha256-hxBk05SNnbl4QucxanNxFyW0AaR/EYzYxpuB3keDx5g=",
-      "SmartERPDashboard.wasm": "sha256-PZ99YvBXf74MytM1WlpzCNf2xX2pGECwdfdDwjVCIFc="
+      "SmartERPDashboard.wasm": "sha256-VRsUSnh//yS7pxgHVwHXu9riMU1j74NnKyPJdYTA+PI="
     }
   },
   "cacheBootResources": true,
