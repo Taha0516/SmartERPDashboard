@@ -7,14 +7,16 @@ Since this is a Blazor WebAssembly (Frontend-only) application, it runs entirely
 
 WebAssembly applications cannot be opened directly by double-clicking `index.html` (due to browser security restrictions on the `file://` protocol). They must be served over an HTTP server.
 
-**Easiest Method:**
-Simply double-click the **`Start-Dashboard.bat`** file.
-This intelligent script will automatically search your computer for common web server tools (Python, Node.js, or .NET), launch the server, and automatically open your web browser to `http://localhost:8080`.
+To make this completely frictionless, we have included a tiny, 100% portable, standalone web server inside this folder (`miniserve.exe`).
 
-**Alternative Method (VS Code):**
-1. Open the `wwwroot` folder in Visual Studio Code.
-2. Install the **"Live Server"** extension.
-3. Right-click `index.html` and select **"Open with Live Server"**.
+**For Windows Users:**
+1. Extract the ZIP file completely (Do not run this from inside the ZIP).
+2. Simply double-click the **`Start-Dashboard.bat`** file.
+*(It will automatically start the portable server and open your browser).*
+
+**For Mac / Apple Users:**
+Simply double-click the **`Start-Dashboard-Mac.command`** file.
+*(Note: If macOS says you don't have permission to open it, open your Terminal, type `chmod +x `, drag and drop the file into the terminal, and press Enter. Then double-click it again).*
 
 ## Files to Share
 
@@ -22,9 +24,9 @@ If you want to share this project with someone else, you only need to zip and sh
 
 The required files/folders for distribution are:
 - `wwwroot/` (Contains all the compiled app files, DLLs, CSS, and JS)
-- `Start-Dashboard.bat` (The easy-start script)
+- `miniserve.exe` (The tiny portable web server)
+- `Start-Dashboard.bat` (For Windows users)
+- `Start-Dashboard-Mac.command` (For Mac users)
 - `README_Distribution.txt` (This instruction file)
-
-*(Note: The `web.config` and `.json` files in the root are optional and only needed if deploying to Microsoft IIS).*
 
 Enjoy the Dashboard!
