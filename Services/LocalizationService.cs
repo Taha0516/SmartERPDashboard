@@ -18,7 +18,6 @@ public class LocalizationService
 
     private readonly Dictionary<string, string> _ar = new()
     {
-        {"SmartERP", "الموارد الذكية (ERP)"},
         {"Academic Demo", "مشروع التخرج"},
         {"Research Dashboard", "لوحة القياس التفاعلية"},
         {"Overview", "نظرة عامة"},
@@ -287,7 +286,32 @@ public class LocalizationService
         {"Tue", "الثلاثاء"},
         {"Wed", "الأربعاء"},
         {"Thu", "الخميس"},
-        {"Fri", "الجمعة"}
+        {"Fri", "الجمعة"},
+
+        // Login
+        {"Welcome back", "مرحباً بعودتك"},
+        {"Sign in to access your dashboard", "سجّل دخولك للوصول إلى لوحة التحكم"},
+        {"Username", "اسم المستخدم"},
+        {"Enter your username", "أدخل اسم المستخدم"},
+        {"Password", "كلمة المرور"},
+        {"Enter your password", "أدخل كلمة المرور"},
+        {"Sign In", "تسجيل الدخول"},
+        {"Signing in...", "جارٍ تسجيل الدخول..."},
+        {"Please enter your username", "الرجاء إدخال اسم المستخدم"},
+        {"Please enter your password", "الرجاء إدخال كلمة المرور"},
+        {"Invalid username or password", "اسم المستخدم أو كلمة المرور غير صحيحة"},
+        {"Academic Demo · Group 15", "مشروع تخرج · المجموعة 15"},
+        {"Logout", "تسجيل الخروج"},
+        
+        // Aramex Case Study Pages
+        {"Aramex Case Study", "دراسة حالة أرامكس"},
+        {"Aramex Goals", "أهداف أرامكس الرقمية"},
+        {"Aramex Importance", "الأهمية التنافسية لأرامكس"},
+        {"Aramex Functions", "الأدوار التشغيلية الحديثة"},
+        {"Aramex Challenges", "تحديات التحول في أرامكس"},
+        {"Aramex Overview", "مركز حلول أرامكس"},
+        {"SmartERP", "حلول أرامكس الذكية (Aramex Smart)"},
+        {"Digital Transformation Impact is up", "ارتفع أثر التحول الرقمي بنسبة"}
     };
 
     public string T(string englishText)

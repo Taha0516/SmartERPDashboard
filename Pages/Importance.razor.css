@@ -1,0 +1,135 @@
+/* ── Importance Page Styles ───────────────────────────────────── */
+.importance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 56px;
+    padding-top: 20px;
+}
+
+.importance-title h2 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--txt-primary);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.importance-title p {
+    font-size: 1.25rem;
+    color: var(--txt-secondary);
+    max-width: 500px;
+}
+
+.quote-box {
+    background: rgba(56, 189, 248, 0.08);
+    border-right: 4px solid var(--blue);
+    padding: 32px;
+    border-radius: 4px 16px 16px 4px;
+    max-width: 450px;
+}
+
+.quote-tag {
+    display: inline-block;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.quote-text {
+    font-size: 1.1rem;
+    color: var(--blue);
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.importance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 56px;
+}
+
+.imp-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: all 0.3s ease;
+    border-right: 4px solid transparent;
+}
+
+.imp-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateX(-5px);
+}
+
+.imp-card.blue { border-right-color: var(--blue); }
+.imp-card.green { border-right-color: var(--green); }
+.imp-card.teal { border-right-color: var(--teal); }
+
+.imp-card h5 {
+    color: var(--txt-primary);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.imp-card p {
+    color: var(--txt-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.stats-banner {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at top left, rgba(56,189,248,0.1), transparent 70%);
+}
+
+.stat-item {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-value {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.stat-item.blue .stat-value { color: var(--blue); }
+.stat-item.green .stat-value { color: var(--green); }
+.stat-item.teal .stat-value { color: var(--teal); }
+
+.stat-label {
+    color: var(--txt-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    max-width: 180px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+    .importance-header { flex-direction: column; align-items: flex-start; }
+    .importance-grid { grid-template-columns: 1fr; }
+    .stats-banner { flex-direction: column; gap: 40px; padding: 40px; }
+}

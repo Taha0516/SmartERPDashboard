@@ -1,21 +1,23 @@
 @inherits LayoutComponentBase
+@implements IDisposable
+@inject IAuthService AuthService
 
 <div class="erp-shell @(_isMenuOpen ? "menu-open" : "")" dir="@Loc.Dir">
     @if (_isMenuOpen)
     {
         <div class="menu-backdrop" @onclick="ToggleMenu" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 90; backdrop-filter: blur(2px);"></div>
     }
+    <header class="top-header">
+        <button class="btn-menu-toggle d-mobile" @onclick="ToggleMenu">
+            <i class="bi bi-list"></i>
+        </button>
+        <div style="flex: 1;"></div>
+        <button class="btn-lang" @onclick="ToggleLanguage">
+            <i class="bi bi-globe"></i> @(Loc.IsArabic ? "English" : "العربية")
+        </button>
+    </header>
     <NavMenu OnLinkClick="CloseMenu" />
     <main class="erp-main" id="main-content">
-        <header class="top-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: var(--bg-card); border-bottom: 1px solid var(--border-color);">
-            <button class="btn-menu-toggle d-mobile" @onclick="ToggleMenu" style="background: none; border: none; color: var(--txt-primary); font-size: 1.5rem; cursor: pointer; padding: 0.5rem; display: none;">
-                <i class="bi bi-list"></i>
-            </button>
-            <div style="flex: 1;"></div>
-            <button class="btn-lang" @onclick="ToggleLanguage" style="background: none; border: 1px solid var(--primary); color: var(--primary); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                <i class="bi bi-globe"></i> @(Loc.IsArabic ? "English" : "العربية")
-            </button>
-        </header>
         <article class="erp-content">
             @Body
         </article>

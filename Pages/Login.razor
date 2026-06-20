@@ -1,0 +1,165 @@
+@page "/login"
+@layout BlankLayout
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<div class="login-page" dir="@Loc.Dir">
+    <!-- Animated background orbs -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="bg-grid"></div>
+
+    <div class="login-card">
+        <!-- Logo -->
+        <div class="card-logo">
+            <div class="logo-icon">
+                <i class="bi bi-grid-3x3-gap-fill"></i>
+            </div>
+            <span class="logo-name">@Loc.T("SmartERP")</span>
+        </div>
+
+        <!-- Header -->
+        <div class="card-header">
+            <h2>@Loc.T("Welcome back")</h2>
+            <p>@Loc.T("Sign in to access your dashboard")</p>
+        </div>
+
+        <!-- Form -->
+        <form class="card-form" @onsubmit="HandleLogin">
+            <div class="field-group">
+                <label>@Loc.T("Username")</label>
+                <div class="field-wrap">
+                    <i class="bi bi-person field-icon"></i>
+                    <input type="text" class="field-input @(shakeUser ? "shake" : "")" 
+                           placeholder="@Loc.T("Enter your username")"
+                           @bind="username" @bind:event="oninput"
+                           autocomplete="username" />
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label>@Loc.T("Password")</label>
+                <div class="field-wrap">
+                    <i class="bi bi-lock field-icon"></i>
+                    <input type="@(showPassword ? "text" : "password")" class="field-input @(shakePass ? "shake" : "")" 
+                           placeholder="@Loc.T("Enter your password")"
+                           @bind="password" @bind:event="oninput"
+                           autocomplete="current-password" />
+                    <button type="button" class="field-eye" @onclick="() => showPassword = !showPassword">
+                        <i class="bi @(showPassword ? "bi-eye-slash" : "bi-eye")"></i>
+                    </button>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="login-error">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span>@errorMessage</span>
+                </div>
+            }
+
+            <button type="submit" class="btn-signin" disabled="@isLoading">
+                @if (isLoading)
+                {
+                    <div class="btn-spinner"></div>
+                }
+                else
+                {
+                    <span>@Loc.T("Sign In")</span>
+                    <i class="bi @(Loc.IsArabic ? "bi-arrow-left" : "bi-arrow-right")"></i>
+                }
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <div class="card-footer">
+            <div class="footer-badge">
+                <i class="bi bi-mortarboard-fill"></i>
+                <span>@Loc.T("Academic Demo · Group 15")</span>
+            </div>
+            <button class="btn-lang-toggle" @onclick="ToggleLanguage">
+                <i class="bi bi-globe"></i> @(Loc.IsArabic ? "English" : "العربية")
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string username = string.Empty;
+    private string password = string.Empty;
+    private string errorMessage = string.Empty;
+    private bool isLoading = false;
+    private bool showPassword = false;
+    private bool shakeUser = false;
+    private bool shakePass = false;
+
+    protected override void OnInitialized()
+    {
+        if (AuthService.IsAuthenticated)
+            NavigationManager.NavigateTo("/");
+
+        Loc.OnLanguageChanged += StateHasChanged;
+    }
+
+    private async Task HandleLogin()
+    {
+        shakeUser = false;
+        shakePass = false;
+        errorMessage = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(username))
+        {
+            shakeUser = true;
+            errorMessage = Loc.T("Please enter your username");
+            await ResetShake();
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            shakePass = true;
+            errorMessage = Loc.T("Please enter your password");
+            await ResetShake();
+            return;
+        }
+
+        isLoading = true;
+        await Task.Delay(600);
+
+        bool success = await AuthService.LoginAsync(username, password);
+
+        if (success)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            shakePass = true;
+            errorMessage = Loc.T("Invalid username or password");
+            password = string.Empty;
+            await ResetShake();
+        }
+
+        isLoading = false;
+    }
+
+    private async Task ResetShake()
+    {
+        await Task.Delay(600);
+        shakeUser = false;
+        shakePass = false;
+        StateHasChanged();
+    }
+
+    private void ToggleLanguage()
+    {
+        Loc.ToggleLanguage();
+    }
+
+    public void Dispose()
+    {
+        Loc.OnLanguageChanged -= StateHasChanged;
+    }
+}

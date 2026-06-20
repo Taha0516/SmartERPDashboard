@@ -1,0 +1,69 @@
+@page "/importance"
+
+<PageTitle>الأهمية التنافسية — Aramex Case Study</PageTitle>
+
+<div class="container mt-4" dir="rtl">
+    <header class="importance-header">
+        <div class="importance-title">
+            <h2 class="text-danger">التنافسية الرقمية لأرامكس</h2>
+            <p>كيف تتفوق أرامكس على عمالقة اللوجستيات العالميين مثل DHL و FedEx عبر التكنولوجيا المبتكرة.</p>
+        </div>
+        <div class="quote-box aramex-quote">
+            <span class="quote-tag">القدرة التنافسية</span>
+            <p class="quote-text text-danger">"التكنولوجيا في أرامكس ليست مجرد أداة مساعدة، بل هي المحرك الأساسي لمواجهة المنافسة العالمية في سوق الشرق الأوسط والعالم."</p>
+        </div>
+    </header>
+
+    <div class="importance-grid">
+        <div class="imp-card aramex-accent">
+            <h5 class="text-danger">الأتمتة مقابل المنافسين</h5>
+            <p>بينما يعتمد المنافسون على بنية تحتية تقليدية، تستخدم أرامكس أنظمة فرز آلية ذكية تمكنها من معالجة الشحنات بسرعة تفوق الطرق التقليدية بنسبة 40%.</p>
+        </div>
+        <div class="imp-card aramex-accent">
+            <h5 class="text-danger">البيانات الضخمة واللوجستيات</h5>
+            <p>تحليل البيانات الضخمة يسمح لأرامكس بالتنبؤ بمواسم الذروة وتوزيع الشحنات بذكاء، مما يمنحها مرونة تنافسية عالية في مواجهة تقلبات السوق.</p>
+        </div>
+        <div class="imp-card aramex-accent">
+            <h5 class="text-danger">الريادة في الابتكار المحلي</h5>
+            <p>فهم السوق الإقليمي مدعوماً بتكنولوجيا "ميل التوصيل الأخير" المخصصة، يجعل أرامكس الخيار الأول للتجارة الإلكترونية في المنطقة مقارنة بالشركات العالمية.</p>
+        </div>
+    </div>
+
+    <section class="stats-banner shadow-lg aramex-stats">
+        <div class="stat-item red">
+            <span class="stat-value text-danger">65+</span>
+            <p class="stat-label">دولة تغطيها شبكة أرامكس الرقمية</p>
+        </div>
+        <div class="stat-item red">
+            <span class="stat-value text-danger">98%</span>
+            <p class="stat-label">دقة التتبع الحي للشحنات</p>
+        </div>
+        <div class="stat-item red">
+            <span class="stat-value text-danger">24/7</span>
+            <p class="stat-label">مراقبة ذكية للعمليات اللوجستية</p>
+        </div>
+    </section>
+</div>
+
+<style>
+    .aramex-quote { background: rgba(227, 6, 19, 0.05) !important; border-right: 4px solid #E30613 !important; }
+    .aramex-accent { border-right: 4px solid #E30613 !important; }
+    .aramex-stats { background: linear-gradient(135deg, var(--bg-surface) 0%, rgba(227, 6, 19, 0.05) 100%) !important; }
+    
+    .importance-header { display: flex; justify-content: space-between; align-items: center; gap: 40px; margin-bottom: 56px; padding-top: 20px; }
+    .importance-title h2 { font-size: 2.75rem; font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
+    .importance-title p { font-size: 1.25rem; color: var(--txt-secondary); max-width: 500px; }
+    .quote-box { padding: 32px; border-radius: 4px 16px 16px 4px; max-width: 450px; }
+    .quote-tag { display: inline-block; color: var(--blue); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .quote-text { font-size: 1.1rem; font-style: italic; line-height: 1.6; }
+    .importance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 56px; }
+    .imp-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; transition: all 0.3s ease; }
+    .imp-card:hover { background: var(--bg-card-hover); transform: translateX(-5px); }
+    .stats-banner { border: 1px solid var(--border); border-radius: 24px; padding: 60px; display: flex; justify-content: space-around; align-items: center; position: relative; overflow: hidden; }
+    .stat-value { font-size: 3.5rem; font-weight: 800; margin-bottom: 8px; display: block; }
+    .stat-label { color: var(--txt-secondary); font-size: 0.9rem; font-weight: 500; max-width: 180px; margin: 0 auto; }
+    @@media (max-width: 1024px) { .importance-header { flex-direction: column; align-items: flex-start; } .importance-grid { grid-template-columns: 1fr; } .stats-banner { flex-direction: column; gap: 40px; padding: 40px; } }
+</style>
+
+@code {
+}

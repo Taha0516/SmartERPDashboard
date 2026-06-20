@@ -1,0 +1,102 @@
+@page "/challenges"
+
+<PageTitle>التحديات الرقمية — Aramex Case Study</PageTitle>
+
+<div class="container mt-4" dir="rtl">
+    <div class="challenges-container">
+        <div class="challenges-card">
+            <header class="challenges-hero aramex-hero">
+                <h2>تحديات التحول الرقمي في أرامكس</h2>
+                <p>العقبات الإستراتيجية والتقنية في رحلة الرقمنة الشاملة</p>
+            </header>
+            
+            <div class="challenges-list">
+                <div class="challenge-item border-danger border-opacity-10">
+                    <div class="challenge-icon-box aramex-bg">
+                        <i class="bi bi-shield-lock-fill text-danger"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-top">
+                            <h5 class="text-danger">الأمن السيبراني وحماية البيانات</h5>
+                            <span class="challenge-badge aramex-badge">تحدي أمني</span>
+                        </div>
+                        <p>تتعامل أرامكس مع ملايين البيانات الشخصية والمالية يومياً، مما يجعل حمايتها من الاختراقات والهجمات السيبرانية أولوية قصوى تتطلب استثمارات ضخمة في أنظمة التشفير.</p>
+                    </div>
+                </div>
+
+                <div class="challenge-item border-danger border-opacity-10">
+                    <div class="challenge-icon-box aramex-bg">
+                        <i class="bi bi-globe-americas text-danger"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-top">
+                            <h5 class="text-danger">تكامل الأنظمة الجمركية العابرة للحدود</h5>
+                            <span class="challenge-badge aramex-badge">تحدي لوجستي</span>
+                        </div>
+                        <p>اختلاف القوانين والأنظمة الرقمية الجمركية بين الدول يتطلب بناء واجهات برمجية (APIs) مرنة قادرة على التكيف مع كل سوق على حدة لضمان سرعة التخليص.</p>
+                    </div>
+                </div>
+
+                <div class="challenge-item border-danger border-opacity-10">
+                    <div class="challenge-icon-box aramex-bg">
+                        <i class="bi bi-bank2 text-danger"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-top">
+                            <h5 class="text-danger">تكاليف البنية التحتية المتطورة</h5>
+                            <span class="challenge-badge aramex-badge">تحدي مالي</span>
+                        </div>
+                        <p>الاستثمار في طائرات الدرون، المركبات ذاتية القيادة، والروبوتات يتطلب ميزانيات بحث وتطوير ضخمة قد تؤثر على الأرباح القصيرة الأمد لصالح النمو المستقبلي.</p>
+                    </div>
+                </div>
+
+                <div class="challenge-item border-danger border-opacity-10">
+                    <div class="challenge-icon-box aramex-bg">
+                        <i class="bi bi-people-fill text-danger"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-top">
+                            <h5 class="text-danger">تأهيل الكوادر البشرية للتقنيات الجديدة</h5>
+                            <span class="challenge-badge aramex-badge">تحدي بشري</span>
+                        </div>
+                        <p>مقاومة التغيير من قبل بعض الموظفين القدامى وصعوبة العثور على خبراء في الذكاء الاصطناعي اللوجستي يمثل عقبة أمام سرعة التنفيذ.</p>
+                    </div>
+                </div>
+
+                <div class="solution-box aramex-light-bg shadow-sm">
+                    <h6 class="text-danger">إستراتيجية المواجهة في أرامكس</h6>
+                    <p>تعتمد أرامكس على منهجية "الابتكار الرشيق" والتدريب المستمر، مع بناء شراكات تقنية عالمية لتجاوز العقبات التقنية والتشريعية بكفاءة.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .aramex-hero { background: linear-gradient(135deg, #E30613 0%, #991b1b 100%) !important; }
+    .aramex-bg { background: rgba(227, 6, 19, 0.1) !important; }
+    .aramex-badge { background: rgba(227, 6, 19, 0.1) !important; color: #E30613 !important; border-color: rgba(227, 6, 19, 0.2) !important; }
+    .aramex-light-bg { background: rgba(227, 6, 19, 0.05) !important; border-color: rgba(227, 6, 19, 0.1) !important; }
+    
+    .challenges-container { max-width: 1000px; margin: 0 auto; }
+    .challenges-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 32px; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); }
+    .challenges-hero { padding: 60px 40px; text-align: center; }
+    .challenges-hero h2 { font-size: 2.75rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .challenges-hero p { color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; }
+    .challenges-list { padding: 48px; }
+    .challenge-item { display: flex; gap: 24px; margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    .challenge-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .challenge-icon-box { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .challenge-info { flex-grow: 1; }
+    .challenge-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .challenge-info h5 { font-weight: 700; font-size: 1.25rem; margin-bottom: 0; }
+    .challenge-badge { padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; border: 1px solid; }
+    .challenge-info p { color: var(--txt-secondary); line-height: 1.6; margin-bottom: 0; }
+    .solution-box { border-radius: 20px; padding: 32px; margin-top: 48px; text-align: center; }
+    .solution-box h6 { font-weight: 800; font-size: 1.1rem; margin-bottom: 12px; }
+    .solution-box p { color: var(--txt-primary); margin-bottom: 0; font-size: 1rem; }
+    @@media (max-width: 768px) { .challenges-list { padding: 32px 24px; } .challenge-item { flex-direction: column; gap: 16px; } .challenge-top { flex-direction: column; align-items: flex-start; gap: 8px; } }
+</style>
+
+@code {
+}

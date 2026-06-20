@@ -1,0 +1,73 @@
+@page "/functions"
+
+<PageTitle>الأدوار التشغيلية — Aramex Digital Operations</PageTitle>
+
+<div class="container mt-4" dir="rtl">
+    <div class="functions-header">
+        <h2 class="text-danger">تكنولوجيا التشغيل اليومي في أرامكس</h2>
+        <span class="functions-badge aramex-bg mt-2">أنظمة اللوجستيات الذكية</span>
+    </div>
+
+    <div class="functions-grid">
+        <div class="function-card aramex-border-left">
+            <div class="function-icon-side aramex-gradient">
+                <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div class="function-content">
+                <h5 class="text-danger">نظام التتبع في الوقت الفعلي</h5>
+                <p>تستخدم أرامكس نظام تتبع متطور يعتمد على تقنيات GPS وإنترنت الأشياء (IoT) لتوفير تحديثات لحظية للعملاء حول موقع شحناتهم بدقة متناهية.</p>
+            </div>
+        </div>
+        <div class="function-card aramex-border-left">
+            <div class="function-icon-side aramex-gradient">
+                <i class="bi bi-house-gear-fill"></i>
+            </div>
+            <div class="function-content">
+                <h5 class="text-danger">أتمتة المستودعات الذكية</h5>
+                <p>إدارة المخزون والفرز آلياً باستخدام الروبوتات والذكاء الاصطناعي لتقليل الأخطاء البشرية وتسريع عمليات التجهيز بنسبة 50%.</p>
+            </div>
+        </div>
+        <div class="function-card aramex-border-left">
+            <div class="function-icon-side aramex-gradient">
+                <i class="bi bi-headset-vr"></i>
+            </div>
+            <div class="function-content">
+                <h5 class="text-danger">خدمة العملاء الرقمية (AI Bot)</h5>
+                <p>روبوتات الدردشة التفاعلية المدعومة بالذكاء الاصطناعي تعالج أكثر من 70% من استفسارات العملاء الروتينية فوراً وعلى مدار الساعة.</p>
+            </div>
+        </div>
+        <div class="function-card aramex-border-left">
+            <div class="function-icon-side aramex-gradient">
+                <i class="bi bi-map-fill"></i>
+            </div>
+            <div class="function-content">
+                <h5 class="text-danger">تحسين المسارات الجغرافي</h5>
+                <p>نظام "Route Optimization" الذي يحلل حركة المرور والظروف الجوية لاختيار أسرع وأقصر مسار لتوصيل الشحنات، مما يوفر الوقت والوقود.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-quote border-danger border-opacity-10">
+        <p class="text-danger opacity-75">"أرامكس تعيد تعريف اللوجستيات عبر دمج التكنولوجيا في كل طرد وكل رحلة."</p>
+    </div>
+</div>
+
+<style>
+    .aramex-bg { background: rgba(227, 6, 19, 0.1) !important; color: #E30613 !important; }
+    .aramex-gradient { background: linear-gradient(180deg, #E30613, #991b1b) !important; }
+    .aramex-border-left { border-left: 1px solid rgba(227, 6, 19, 0.2) !important; }
+    
+    .functions-header { text-align: center; margin-bottom: 56px; }
+    .functions-header h2 { font-size: 2.5rem; font-weight: 800; }
+    .functions-badge { padding: 8px 24px; border-radius: 100px; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; }
+    .functions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 32px; }
+    .function-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; display: flex; overflow: hidden; transition: all 0.3s ease; }
+    .function-card:hover { transform: translateY(-5px); border-color: #E30613; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+    .function-icon-side { width: 120px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #fff; flex-shrink: 0; }
+    .function-content { padding: 32px; }
+    .function-content h5 { font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; }
+    .function-content p { color: var(--txt-secondary); line-height: 1.6; margin-bottom: 0; }
+    .footer-quote { margin-top: 64px; text-align: center; padding: 40px; border-top: 1px solid var(--border); }
+    .footer-quote p { font-size: 1.4rem; font-style: italic; }
+    @@media (max-width: 600px) { .function-card { flex-direction: column; } .function-icon-side { width: 100%; height: 100px; } .functions-grid { grid-template-columns: 1fr; } }
+</style>

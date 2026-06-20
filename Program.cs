@@ -12,5 +12,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 // ── Register Services ───────────────────────────────────────────
 builder.Services.AddSingleton<IMockDataService, MockDataService>();
 builder.Services.AddSingleton<LocalizationService>();
+builder.Services.AddSingleton<IAuthService, AuthService>();
 
 await builder.Build().RunAsync();

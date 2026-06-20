@@ -1,8 +1,12 @@
 @* ── Top Navbar / Sidebar navigation ── *@
+@implements IDisposable
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
 <nav class="erp-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-brand">
         <i class="bi bi-grid-3x3-gap-fill nav-brand-icon"></i>
-        <span class="nav-brand-text">@Loc.T("SmartERP")</span>
+        <span class="nav-brand-text"><strong>Aramex</strong> Smart</span>
     </div>
 
     <ul class="nav-links" role="list" @onclick="HandleClick">
@@ -10,6 +14,30 @@
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <i class="bi bi-speedometer2"></i>
                 <span>@Loc.T("Overview")</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link" href="goals">
+                <i class="bi bi-bullseye"></i>
+                <span>@Loc.T("Aramex Goals")</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link" href="importance">
+                <i class="bi bi-award"></i>
+                <span>@Loc.T("Aramex Importance")</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link" href="functions">
+                <i class="bi bi-puzzle"></i>
+                <span>@Loc.T("Aramex Functions")</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link" href="challenges">
+                <i class="bi bi-shield-slash"></i>
+                <span>@Loc.T("Aramex Challenges")</span>
             </NavLink>
         </li>
         <li>
@@ -46,12 +74,15 @@
 
     <div class="nav-footer">
         <div class="nav-user-badge">
-            <i class="bi bi-mortarboard-fill"></i>
+            <div class="nav-avatar">@(string.IsNullOrEmpty(AuthService.Username) ? "U" : char.ToUpper(AuthService.Username[0]).ToString())</div>
             <div>
-                <span class="nav-user-name">@Loc.T("Academic Demo")</span>
+                <span class="nav-user-name">@(AuthService.Username ?? "User")</span>
                 <span class="nav-user-role">@Loc.T("Research Dashboard")</span>
             </div>
         </div>
+        <button class="btn-logout" @onclick="HandleLogout" title="@Loc.T("Logout")">
+            <i class="bi bi-box-arrow-right"></i>
+        </button>
     </div>
 </nav>
 
@@ -65,6 +96,12 @@
         {
             await OnLinkClick.InvokeAsync();
         }
+    }
+
+    private void HandleLogout()
+    {
+        AuthService.Logout();
+        NavigationManager.NavigateTo("/login", true);
     }
 
     protected override void OnInitialized()

@@ -1,0 +1,74 @@
+@page "/goals"
+
+<PageTitle>أهداف أرامكس — Aramex Smart Solutions</PageTitle>
+
+<div class="container mt-4" dir="rtl">
+    <section class="goals-hero">
+        <div class="brand-logo mb-3">
+            <span class="badge bg-danger px-3 py-2">دراسة حالة: أرامكس (Aramex)</span>
+        </div>
+        <h2 class="fw-bold">الأهداف الإستراتيجية للتحول الرقمي في أرامكس</h2>
+        <p class="lead text-muted">كيف تهدف أرامكس لتعزيز ريادتها في السوق اللوجستي عبر حلول التكنولوجيا الحديثة</p>
+    </section>
+
+    <div class="goals-grid">
+        <div class="goal-card aramex-border">
+            <div class="goal-icon-wrap aramex-bg">
+                <i class="bi bi-clock-history"></i>
+            </div>
+            <h5>تقليص زمن التسليم (Last-Mile)</h5>
+            <p>تهدف أرامكس لاستخدام خوارزميات الذكاء الاصطناعي لتقليل زمن التوصيل النهائي بنسبة 30% عبر تحسين مسارات الرحلات آلياً.</p>
+        </div>
+        <div class="goal-card aramex-border">
+            <div class="goal-icon-wrap aramex-bg">
+                <i class="bi bi-truck-flatbed"></i>
+            </div>
+            <h5>تحسين كفاءة الأسطول</h5>
+            <p>أتمتة إدارة الأسطول لتقليل استهلاك الوقود والانبعاثات الكربونية، مع مراقبة حية لحالة المركبات لضمان استمرارية الخدمة.</p>
+        </div>
+        <div class="goal-card aramex-border">
+            <div class="goal-icon-wrap aramex-bg">
+                <i class="bi bi-emoji-smile"></i>
+            </div>
+            <h5>رفع مستوى رضا العملاء</h5>
+            <p>توفير تجربة مستخدم سلسة عبر منصات رقمية تتيح تتبعاً دقيقاً وتفاعلاً فورياً مع الشحنات في كل مراحلها.</p>
+        </div>
+        <div class="goal-card aramex-border">
+            <div class="goal-icon-wrap aramex-bg">
+                <i class="bi bi-box-seam"></i>
+            </div>
+            <h5>أتمتة مراكز الفرز</h5>
+            <p>التحول نحو مراكز فرز ذكية بالكامل قادرة على التعامل مع آلاف الشحنات في الساعة بدقة متناهية ودون تدخل بشري.</p>
+        </div>
+    </div>
+
+    <div class="summary-box aramex-light-bg">
+        <i class="bi bi-patch-check-fill summary-icon text-danger"></i>
+        <div class="summary-content">
+            <h4 class="text-danger">رؤية أرامكس المستقبلية</h4>
+            <p>تسعى أرامكس لتكون "شركة تكنولوجيا تقدم خدمات لوجستية"، حيث يمثل الابتكار الرقمي حجر الزاوية في نموها المستدام وقدرتها على التوسع العالمي.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .aramex-bg { background: rgba(227, 6, 19, 0.1) !important; color: #E30613 !important; }
+    .aramex-border { border-top: 4px solid #E30613 !important; }
+    .aramex-light-bg { background: rgba(227, 6, 19, 0.03) !important; border: 1px solid rgba(227, 6, 19, 0.1) !important; }
+    
+    .goals-hero {
+        background: linear-gradient(135deg, rgba(227, 6, 19, 0.05) 0%, transparent 60%);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 60px 40px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    .goals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 48px; }
+    .goal-card { background: var(--bg-card); border-radius: var(--radius); padding: 32px; text-align: center; transition: all 0.3s ease; }
+    .goal-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); }
+    .goal-icon-wrap { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 16px; }
+    .summary-box { border-radius: 20px; padding: 32px; display: flex; align-items: center; gap: 24px; }
+    .summary-icon { font-size: 2.5rem; }
+    @@media (max-width: 768px) { .summary-box { flex-direction: column; text-align: center; } }
+</style>

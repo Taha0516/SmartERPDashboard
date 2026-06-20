@@ -1,14 +1,43 @@
 @page "/"
+@implements IDisposable
 @inject IMockDataService DataService
 @inject IJSRuntime JS
+@inject IAuthService AuthService
+@inject NavigationManager Nav
 
 <PageTitle>Overview Dashboard — Smart ERP</PageTitle>
 
-<section class="page-hero">
-    <div class="hero-content">
-        <span class="hero-eyebrow">@Loc.T("Academic Research Dashboard")</span>
-        <h1 class="hero-title">@((MarkupString)Loc.T("The Role of Modern Technology<br />in Organizational Competitiveness"))</h1>
-        <p class="hero-subtitle">@Loc.T("Toggle between states to visualize the measurable impact of digital transformation on key business metrics.")</p>
+<section class="command-header">
+    <div class="header-welcome">
+        <div class="welcome-text">
+            <h1>@Loc.T("Aramex Case Study"), @AuthService.Username!</h1>
+            <p>@Loc.T("Digital Transformation Impact is up") <span class="trend-up">+14.2%</span> @Loc.T("for Aramex logistics.")</p>
+        </div>
+        
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="@Loc.T("Search metrics, tools, or research data...")" />
+            <kbd>Ctrl + K</kbd>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <button class="action-btn" @onclick='() => Nav.NavigateTo("roi-calculator")'>
+            <i class="bi bi-calculator-fill"></i>
+            <span>@Loc.T("New ROI Analysis")</span>
+        </button>
+        <button class="action-btn" @onclick='() => Nav.NavigateTo("operations-center")'>
+            <i class="bi bi-gear-wide-connected"></i>
+            <span>@Loc.T("Operations Status")</span>
+        </button>
+        <button class="action-btn" @onclick='() => Nav.NavigateTo("team-collaboration")'>
+            <i class="bi bi-people-fill"></i>
+            <span>@Loc.T("Collaborators")</span>
+        </button>
+        <button class="action-btn" @onclick='() => Nav.NavigateTo("tech-toolkit")'>
+            <i class="bi bi-cpu-fill"></i>
+            <span>@Loc.T("Toolkit")</span>
+        </button>
     </div>
 </section>
 
@@ -30,7 +59,6 @@
     </p>
 </div>
 
-<!-- ── KPI Cards ──────────────────────────────────────────────── -->
 <section class="kpi-section" aria-label="Key Performance Indicators">
     <h2 class="section-heading">@Loc.T("Key Performance Indicators")</h2>
     <div class="kpi-grid">
@@ -41,7 +69,6 @@
     </div>
 </section>
 
-<!-- ── Growth Chart ───────────────────────────────────────────── -->
 <section class="chart-section" aria-label="Growth Comparison Chart">
     <div class="chart-card">
         <div class="chart-card__header">
@@ -62,6 +89,7 @@
 
 @code {
     private bool _afterTech = true;
+    private bool _isRendered = false;
     private List<KpiMetric> _kpiMetrics = new();
     private ChartData _chartData = new();
 
@@ -78,15 +106,23 @@
 
     private async void OnLanguageChanged()
     {
-        LoadData();
-        StateHasChanged();
-        await UpdateChart();
+        try 
+        {
+            LoadData();
+            StateHasChanged();
+            if (_isRendered)
+            {
+                await UpdateChart();
+            }
+        }
+        catch { /* Ignore background errors during lang switch */ }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            _isRendered = true;
             await RenderChart();
         }
     }
@@ -107,11 +143,28 @@
 
     private async Task RenderChart()
     {
-        await JS.InvokeVoidAsync("SmartERP.initChart", "growthChart", _chartData);
+        try 
+        {
+            await JS.InvokeVoidAsync("SmartERP.initChart", "growthChart", _chartData);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[SmartERP] Chart Init Error: {ex.Message}");
+        }
     }
 
     private async Task UpdateChart()
     {
-        await JS.InvokeVoidAsync("SmartERP.updateChart", "growthChart", _chartData);
+        try 
+        {
+            if (_isRendered)
+            {
+                await JS.InvokeVoidAsync("SmartERP.updateChart", "growthChart", _chartData);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[SmartERP] Chart Update Error: {ex.Message}");
+        }
     }
 }

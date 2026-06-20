@@ -1,0 +1,104 @@
+/* ── Goals Page Styles ────────────────────────────────────────── */
+.goals-hero {
+    background: linear-gradient(135deg, rgba(56,189,248,0.1) 0%, transparent 60%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.goals-hero h2 {
+    color: var(--blue);
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.goal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.goal-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--blue);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    background: var(--bg-card-hover);
+}
+
+.goal-icon-wrap {
+    width: 64px;
+    height: 64px;
+    background: rgba(56, 189, 248, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--blue);
+    margin-bottom: 8px;
+}
+
+.goal-card.success .goal-icon-wrap { color: var(--green); background: rgba(52, 211, 153, 0.1); }
+.goal-card.info .goal-icon-wrap { color: var(--teal); background: rgba(45, 212, 191, 0.1); }
+.goal-card.warning .goal-icon-wrap { color: var(--orange); background: rgba(251, 146, 60, 0.1); }
+
+.goal-card h5 {
+    color: var(--txt-primary);
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+.goal-card p {
+    color: var(--txt-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.summary-box {
+    background: rgba(56, 189, 248, 0.05);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.summary-icon {
+    font-size: 2.5rem;
+    color: var(--blue);
+}
+
+.summary-content h4 {
+    color: var(--blue);
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.summary-content p {
+    color: var(--txt-primary);
+    margin-bottom: 0;
+    font-size: 1.05rem;
+}
+
+@media (max-width: 768px) {
+    .goals-hero { padding: 40px 20px; }
+    .goals-hero h2 { font-size: 1.8rem; }
+    .summary-box { flex-direction: column; text-align: center; }
+}
